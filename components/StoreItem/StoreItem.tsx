@@ -24,7 +24,9 @@ const StoreItem = ({ title, price, img }: StoreItemProps) => {
       <Flex flexDir="column" padding="1rem">
         <Flex justify={"space-between"} align={"baseline"} mb={"2rem"}>
           <Box fontSize={"2rem"}>{title}</Box>
-          <Box ml={"2rem"}>{formatCurrency(price)} Kč</Box>
+          <Box ml={"2rem"} fontSize={"1.2rem"}>
+            {formatCurrency(price)} Kč
+          </Box>
         </Flex>
       </Flex>
     </Flex>

@@ -83,15 +83,15 @@ const Header = () => {
             <Text fontSize={"1.3rem"}>{totalPrice} Kč</Text>
           </Flex>
         </PopoverTrigger>
-        <PopoverContent minW={{ base: "100%", lg: "max-content" }}>
+        <PopoverContent minW={{ base: "100%", lg: "max-content" }} p={"0.4rem"}>
           <PopoverBody>
             <Flex flexDir={"column"} gap={"1rem"}>
               {cartItems.map((product: any) => (
                 <CartItem key={product.id} {...product} />
               ))}
               <Flex justify={"space-between"}>
-                <Text>CELKEM</Text>
-                <Text>{totalPrice} Kč</Text>
+                <Text fontSize={"1.3rem"}>CELKEM</Text>
+                <Text fontSize={"1.3rem"}>{totalPrice} Kč</Text>
               </Flex>
               <Link href={"/kosik"}>
                 <Flex justify={"center"} bgColor={"red"} p={"0.6rem 0"}>

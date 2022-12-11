@@ -68,7 +68,13 @@ const ProductDetails = ({ id, product }: any) => {
 
   return (
     <Layout>
-      <Flex gap={"2rem"} justify={"center"} mt={"3rem"}>
+      <Flex
+        flexDir={{ base: "column", md: "row" }}
+        gap={"2rem"}
+        justify={"center"}
+        align={"center"}
+        mt={"3rem"}
+      >
         <Img
           src={`http://localhost:1337${product.data.attributes.img.data.attributes.url}`}
           w={"42rem"}
@@ -108,13 +114,21 @@ const ProductDetails = ({ id, product }: any) => {
 
           <Button
             alignSelf={"flex-start"}
-            p={"2rem 3.8rem"}
+            p={"2rem 4.3rem"}
             mt={"2rem"}
             fontSize={"1.3rem"}
             onClick={() => increaseCartQuantity(product.data.id)}
           >
             Pridat do kosiku
           </Button>
+          <Text
+            maxWidth={"37rem"}
+            fontSize={"1.1rem"}
+            letterSpacing={"0.5px"}
+            mt={"2rem"}
+          >
+            {product.data.attributes.description}
+          </Text>
         </Flex>
       </Flex>
     </Layout>
