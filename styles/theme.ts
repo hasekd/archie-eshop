@@ -33,7 +33,7 @@ export type Theme = typeof theme;
 const globalStylesTheme = {
   styles: {
     global: {
-      body: { bg: "#eee", boxSizing: "border-box", margin: 0, padding: 0 },
+      body: { boxSizing: "border-box", margin: 0, padding: 0 },
       html: { fontSize: "62.5%" },
     },
   },

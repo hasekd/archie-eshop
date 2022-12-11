@@ -1,19 +1,23 @@
 import { Box, Flex, Img } from "@chakra-ui/react";
-import React from "react";
+import { theme } from "../../styles/theme";
 import { formatCurrency } from "../../utils/formatCurrency";
 
 type StoreItemProps = {
-  id: number;
   title: string;
   price: number;
   img: any;
 };
-const StoreItem = ({ id, title, price, img }: StoreItemProps) => {
+
+const StoreItem = ({ title, price, img }: StoreItemProps) => {
   return (
-    <Flex w={"30rem"} flexDir={"column"}>
+    <Flex
+      w={{ base: "28rem", sm: "40rem" }}
+      flexDir={"column"}
+      _hover={{ boxShadow: theme.shadow.boxShadow }}
+    >
       <Img
         src={`http://localhost:1337${img.data.attributes.url}`}
-        height="20rem"
+        height={{ base: "25rem", sm: "32rem" }}
         width="100%"
         objectFit={"cover"}
       />
