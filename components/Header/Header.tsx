@@ -46,8 +46,10 @@ const Header = () => {
 
   return (
     <Flex justify={"space-between"} align={"center"} m={"0 3rem"}>
-      <Heading>Archie</Heading>
       <Link href={"/store"}>Shop now</Link>
+      <Link href={"/"}>
+        <Heading>Archie</Heading>
+      </Link>
       <Popover trigger="hover" placement="bottom-end">
         <PopoverTrigger>
           <Flex
