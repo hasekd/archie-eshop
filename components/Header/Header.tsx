@@ -1,7 +1,5 @@
 import {
-  Box,
   Button,
-  Container,
   Flex,
   Heading,
   Icon,
@@ -16,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
 import CartItem from "../ShoppingCart/CartItem";
+import { theme } from "../../styles/theme";
 import { formatCurrency } from "../../utils/formatCurrency";
 
 const Header = () => {
@@ -45,8 +44,7 @@ const Header = () => {
   );
 
   return (
-    <Flex justify={"space-between"} align={"center"} m={"0 3rem"}>
-      <Link href={"/store"}>Shop now</Link>
+    <Flex justify={"space-between"} align={"center"} p={"2rem 4rem"}>
       <Link href={"/"}>
         <Heading>Archie</Heading>
       </Link>
@@ -55,7 +53,7 @@ const Header = () => {
           <Flex
             align={"center"}
             gap={"0.7rem"}
-            _hover={{ bgColor: "none", color: "red" }}
+            _hover={{ bgColor: "none", textColor: theme.color.primary.blue }}
             cursor={"pointer"}
           >
             <Button
@@ -68,7 +66,7 @@ const Header = () => {
               <Icon as={FiShoppingCart} w={"2rem"} h={"2rem"} />
               <Flex
                 borderRadius={"50%"}
-                bgColor={"red"}
+                bgColor={theme.color.primary.blue}
                 justify={"center"}
                 align={"center"}
                 color={"white"}
@@ -96,7 +94,14 @@ const Header = () => {
                 <Text fontSize={"1.3rem"}>{totalPrice} Kč</Text>
               </Flex>
               <Link href={"/kosik"}>
-                <Flex justify={"center"} bgColor={"red"} p={"0.6rem 0"}>
+                <Flex
+                  justify={"center"}
+                  bgColor={theme.color.primary.blue}
+                  fontWeight={600}
+                  p={"0.7rem 0"}
+                  fontSize={"1.1rem"}
+                  textColor={theme.color.text.white}
+                >
                   Zobrazit kosik
                 </Flex>
               </Link>
