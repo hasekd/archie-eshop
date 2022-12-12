@@ -4,9 +4,7 @@ const color = {
   primary: {
     white: "#ffffff",
     black: "#000000",
-    yellow: "#FFD500",
-    red: "#DD3639",
-    lightBlue: "#7AABC8",
+    blue: "#0c8599",
   },
   secondary: {
     danger: "#dc3545",
@@ -33,7 +31,12 @@ export type Theme = typeof theme;
 const globalStylesTheme = {
   styles: {
     global: {
-      body: { boxSizing: "border-box", margin: 0, padding: 0 },
+      body: {
+        boxSizing: "border-box",
+        margin: 0,
+        padding: 0,
+        fontFamily: "'Raleway', sans-serif",
+      },
       html: { fontSize: "62.5%" },
     },
   },

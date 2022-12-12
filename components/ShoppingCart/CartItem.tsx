@@ -7,7 +7,7 @@ import {
   Img,
   Text,
 } from "@chakra-ui/react";
-import { GetStaticProps } from "next";
+import { theme } from "../../styles/theme";
 import { useEffect, useState } from "react";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
 import { formatCurrency } from "../../utils/formatCurrency";
@@ -61,7 +61,7 @@ const CartItem = ({ id, quantity }: any) => {
           <Button
             bgColor={"transparent"}
             fontSize={"1.3rem"}
-            _hover={{ bgColor: "none", color: "red" }}
+            _hover={{ bgColor: "none", color: theme.color.primary.blue }}
             onClick={() => removeFromCart(product.id)}
           >
             &times;

@@ -19,12 +19,12 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-const Store = ({ products }: any) => {
+const Pelisky = ({ products }: any) => {
   return (
     <Layout>
-      <Flex flexWrap={"wrap"} justify={"center"} gap={"1rem"}>
+      <Flex flexWrap={"wrap"} justify={"center"} gap={"1rem"} mt={"3rem"}>
         {products.data.map((product: ProductTypes) => (
-          <Link key={product.id} href={"/store/" + product.id}>
+          <Link key={product.id} href={"/pelisky/" + product.id}>
             <StoreItem {...product.attributes} />
           </Link>
         ))}
@@ -33,4 +33,4 @@ const Store = ({ products }: any) => {
   );
 };
 
-export default Store;
+export default Pelisky;

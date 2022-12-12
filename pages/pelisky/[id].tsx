@@ -123,7 +123,7 @@ const ProductDetails = ({ id, product }: any) => {
           </Button>
           <Text
             maxWidth={"37rem"}
-            fontSize={"1.1rem"}
+            fontSize={"1.2rem"}
             letterSpacing={"0.5px"}
             mt={"2rem"}
           >
