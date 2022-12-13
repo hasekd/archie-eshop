@@ -17,7 +17,7 @@ type CartItemProps = {
   quantity: number;
 };
 
-const CartItem = ({ id, quantity }: any) => {
+const CartItem = ({ id, quantity }: CartItemProps) => {
   const { removeFromCart } = useShoppingCart();
 
   const [data, setData] = useState<any>();
