@@ -5,6 +5,7 @@ const color = {
     white: "#ffffff",
     black: "#000000",
     blue: "#0c8599",
+    gray: "#f9f9f9",
   },
   secondary: {
     danger: "#dc3545",
