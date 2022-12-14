@@ -16,6 +16,9 @@ const color = {
     white: "#ffffff",
     black: "#000000",
   },
+  hover: {
+    blue: "#2491a3",
+  },
 };
 
 const shadow = {
