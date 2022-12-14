@@ -17,6 +17,7 @@ import {
 import CartProducts from "./CartProducts";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
 import { formatCurrency } from "../../utils/formatCurrency";
+import { useRouter } from "next/router";
 
 const FlexInputGroup: FlexProps = {
   gap: "1rem",
@@ -39,6 +40,8 @@ const UserInfoForm = () => {
   const { register, handleSubmit } = useForm<Inputs>();
 
   const { cartItems } = useShoppingCart();
+
+  const router = useRouter();
 
   const [data, setData] = useState<any>();
 
@@ -65,6 +68,7 @@ const UserInfoForm = () => {
 
   const submitHandler: SubmitHandler<Inputs> = (data) => {
     console.log(data);
+    router.push("/pokladna");
   };
 
   return (
@@ -147,6 +151,7 @@ const UserInfoForm = () => {
               p={"1.5rem"}
               bgColor={theme.color.primary.blue}
               textColor={theme.color.text.white}
+              _hover={{ bgColor: theme.color.hover.blue }}
               type="submit"
             >
               Platba a doprava
