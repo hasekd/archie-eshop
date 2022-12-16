@@ -3,31 +3,26 @@ import {
   BoxProps,
   Button,
   Flex,
-  FlexProps,
   Heading,
   Img,
+  Link,
+  Spinner,
   Text,
 } from "@chakra-ui/react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Layout from "../../components/Layout/Layout";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
-
-const ChooseSizeBoxStyles: FlexProps = {
-  w: "4rem",
-  h: "3.5rem",
-  border: "1px solid lightgrey",
-  color: "black",
-  align: "center",
-  justify: "center",
-  cursor: "pointer",
-};
+import { theme } from "../../styles/theme";
+import { useEffect, useState } from "react";
 
 const ChooseColorBoxStyles: BoxProps = {
   borderRadius: "50%",
-  w: "2.5rem",
-  h: "2.5rem",
+  w: "3rem",
+  h: "3rem",
   cursor: "pointer",
+  _hover: { boxShadow: "0 0 0 0.3rem #ccc", border: "0.1rem solid #fff" },
+  transition: "all 0.3s ease-out",
 };
 
 type ProductTypes = {
@@ -63,7 +58,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   };
 };
 
-const ProductDetails = ({ id, product }: any) => {
+const ProductDetails = ({ product }: any) => {
   const { increaseCartQuantity } = useShoppingCart();
 
   return (
@@ -77,11 +72,11 @@ const ProductDetails = ({ id, product }: any) => {
       >
         <Img
           src={`http://localhost:1337${product.data.attributes.img.data.attributes.url}`}
-          w={"42rem"}
-          h={"42rem"}
+          w={"45rem"}
+          h={"45rem"}
           objectFit={"cover"}
         />
-        <Flex flexDir={"column"} gap={"0.7rem"}>
+        <Flex flexDir={"column"} gap={"0.9rem"}>
           <Heading fontWeight={"400"} fontSize={"2.7rem"}>
             {product.data.attributes.title}
           </Heading>
@@ -89,41 +84,40 @@ const ProductDetails = ({ id, product }: any) => {
             {formatCurrency(product.data.attributes.price)} Kč
           </Text>
 
-          <Box mt={"1.5rem"}>
-            <Text fontSize={"1.5rem"} mb={"1rem"}>
+          {/* <Box mt={"2rem"}>
+            <Text fontSize={"1.6rem"} mb={"1rem"}>
               Vyberte barvu
             </Text>
             <Flex gap={"1rem"}>
-              <Box {...ChooseColorBoxStyles} bgColor={"red"} />
-              <Box {...ChooseColorBoxStyles} bgColor={"blue"} />
-              <Box {...ChooseColorBoxStyles} bgColor={"yellow"} />
+              <Link href={"/pelisky/" + product.data.id}>
+                <Box {...ChooseColorBoxStyles} bgColor={"red"} />
+              </Link>
+              <Link href={"/pelisky/" + product.data.id}>
+                <Box {...ChooseColorBoxStyles} bgColor={"blue"} />
+              </Link>
+              <Link href={"/pelisky/4"}>
+                <Box {...ChooseColorBoxStyles} bgColor={"green"} />
+              </Link>
               <Box {...ChooseColorBoxStyles} bgColor={"green"} />
             </Flex>
-          </Box>
-
-          <Box mt={"1.5rem"}>
-            <Text fontSize={"1.5rem"} mb={"1rem"}>
-              Vyberte velikost
-            </Text>
-            <Flex fontSize={"1.2rem"} gap={"1rem"}>
-              <Flex {...ChooseSizeBoxStyles}>S</Flex>
-              <Flex {...ChooseSizeBoxStyles}>M</Flex>
-              <Flex {...ChooseSizeBoxStyles}>L</Flex>
-            </Flex>
-          </Box>
+          </Box> */}
 
           <Button
             alignSelf={"flex-start"}
             p={"2rem 4.3rem"}
             mt={"2rem"}
-            fontSize={"1.3rem"}
+            fontSize={"1.35rem"}
+            fontWeight={700}
+            bgColor={theme.color.primary.blue}
+            textColor={theme.color.text.white}
+            _hover={{ bgColor: theme.color.hover.blue }}
             onClick={() => increaseCartQuantity(product.data.id)}
           >
-            Pridat do kosiku
+            Přidat do košíku
           </Button>
           <Text
-            maxWidth={"37rem"}
-            fontSize={"1.2rem"}
+            maxWidth={"42rem"}
+            fontSize={"1.3rem"}
             letterSpacing={"0.5px"}
             mt={"2rem"}
           >

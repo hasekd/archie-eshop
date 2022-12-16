@@ -7,6 +7,7 @@ import {
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
+  Spinner,
   Text,
 } from "@chakra-ui/react";
 import { FiShoppingCart } from "react-icons/fi";
@@ -32,7 +33,7 @@ const Header = () => {
   }, []);
 
   if (!data) {
-    return <div>Loading...</div>;
+    return <Spinner size={"xs"} />;
   }
 
   const totalPrice = formatCurrency(
@@ -97,12 +98,13 @@ const Header = () => {
                 <Flex
                   justify={"center"}
                   bgColor={theme.color.primary.blue}
-                  fontWeight={600}
                   p={"0.7rem 0"}
-                  fontSize={"1.1rem"}
+                  fontSize={"1.2rem"}
+                  fontWeight={700}
                   textColor={theme.color.text.white}
+                  _hover={{ bgColor: theme.color.hover.blue }}
                 >
-                  Zobrazit kosik
+                  Zobrazit košík
                 </Flex>
               </Link>
             </Flex>

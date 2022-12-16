@@ -149,6 +149,8 @@ const UserInfoForm = () => {
               alignSelf={"center"}
               minW={"40%"}
               p={"1.5rem"}
+              fontSize={"1.1rem"}
+              fontWeight={700}
               bgColor={theme.color.primary.blue}
               textColor={theme.color.text.white}
               _hover={{ bgColor: theme.color.hover.blue }}
@@ -184,11 +186,7 @@ const UserInfoForm = () => {
               <Text>99 Kč</Text>
             </Flex>
             <Divider borderColor={"#666666"} />
-            <Flex
-              justify={"space-between"}
-              fontSize={"1.9rem"}
-              fontWeight={700}
-            >
+            <Flex justify={"space-between"} fontSize={"2rem"} fontWeight={700}>
               <Text>Celkem:</Text>
               <Text>{totalPrice} Kč</Text>
             </Flex>

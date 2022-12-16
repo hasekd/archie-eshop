@@ -5,6 +5,7 @@ import {
   Flex,
   HStack,
   Img,
+  Spinner,
   Text,
 } from "@chakra-ui/react";
 import { theme } from "../../styles/theme";
@@ -32,7 +33,7 @@ const CartItem = ({ id, quantity }: CartItemProps) => {
   }, []);
 
   if (!data) {
-    return <div>Loading...</div>;
+    return <Spinner size={"xs"} />;
   }
 
   const product = data.find((i: any) => i.id === id);
@@ -43,10 +44,10 @@ const CartItem = ({ id, quantity }: CartItemProps) => {
     <>
       <Flex justify={"space-between"} align={"center"} gap={"4rem"}>
         <Flex flexDir={"column"} gap={1}>
-          <Text fontSize={"1.2rem"} letterSpacing={"0.3px"}>
+          <Text fontSize={"1.3rem"} letterSpacing={"0.3px"}>
             {product.attributes.title}
           </Text>
-          <Flex gap={1} fontSize={"1.05rem"}>
+          <Flex gap={1} fontSize={"1.15rem"}>
             <Text>{quantity}x</Text>
             <Text>{formatCurrency(product.attributes.price)} Kč</Text>
           </Flex>
@@ -54,15 +55,16 @@ const CartItem = ({ id, quantity }: CartItemProps) => {
         <Flex align={"center"}>
           <Img
             src={`http://localhost:1337${product.attributes.img.data.attributes.url}`}
-            w={"5rem"}
-            h={"5rem"}
+            w={"6rem"}
+            h={"6rem"}
             objectFit={"cover"}
           />
           <Button
             bgColor={"transparent"}
-            fontSize={"1.3rem"}
+            fontSize={"2rem"}
             _hover={{ bgColor: "none", color: theme.color.primary.blue }}
             onClick={() => removeFromCart(product.id)}
+            _active={{ bgColor: "none" }}
           >
             &times;
           </Button>

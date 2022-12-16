@@ -59,6 +59,7 @@ const CartProducts = ({ id, quantity }: CartItemProps) => {
             pos={"absolute"}
             zIndex={1}
             _active={{ bgColor: "none" }}
+            fontSize={"1.7rem"}
             onClick={() => decreaseCartQuantity(product.id)}
           >
             -
@@ -77,6 +78,7 @@ const CartProducts = ({ id, quantity }: CartItemProps) => {
             pos={"absolute"}
             right={0}
             _active={{ bgColor: "none" }}
+            fontSize={"1.7rem"}
             onClick={() => increaseCartQuantity(product.id)}
           >
             +
@@ -89,7 +91,7 @@ const CartProducts = ({ id, quantity }: CartItemProps) => {
           </Text>
           <Button
             bgColor={"transparent"}
-            fontSize={"1.4rem"}
+            fontSize={"2rem"}
             _hover={{ bgColor: "none", color: theme.color.primary.blue }}
             onClick={() => removeFromCart(product.id)}
           >

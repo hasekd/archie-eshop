@@ -5,7 +5,7 @@ import chakraTheme from "./../styles/theme";
 import { Raleway } from "@next/font/google";
 
 const raleway = Raleway({
-  subsets: ["latin"],
+  subsets: ["cyrillic"],
   weight: ["400", "500", "600", "700"],
 });
 
