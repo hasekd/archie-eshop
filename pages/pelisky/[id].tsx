@@ -14,7 +14,7 @@ import Layout from "../../components/Layout/Layout";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
 import { theme } from "../../styles/theme";
-import { useEffect, useState } from "react";
+import ProductColor from "../../components/StoreItem/ProductColor";
 
 const ChooseColorBoxStyles: BoxProps = {
   borderRadius: "50%",
@@ -60,6 +60,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 const ProductDetails = ({ product }: any) => {
   const { increaseCartQuantity } = useShoppingCart();
+  console.log(product.data.id);
 
   return (
     <Layout>
@@ -84,23 +85,12 @@ const ProductDetails = ({ product }: any) => {
             {formatCurrency(product.data.attributes.price)} Kč
           </Text>
 
-          {/* <Box mt={"2rem"}>
+          <Box mt={"2rem"}>
             <Text fontSize={"1.6rem"} mb={"1rem"}>
               Vyberte barvu
             </Text>
-            <Flex gap={"1rem"}>
-              <Link href={"/pelisky/" + product.data.id}>
-                <Box {...ChooseColorBoxStyles} bgColor={"red"} />
-              </Link>
-              <Link href={"/pelisky/" + product.data.id}>
-                <Box {...ChooseColorBoxStyles} bgColor={"blue"} />
-              </Link>
-              <Link href={"/pelisky/4"}>
-                <Box {...ChooseColorBoxStyles} bgColor={"green"} />
-              </Link>
-              <Box {...ChooseColorBoxStyles} bgColor={"green"} />
-            </Flex>
-          </Box> */}
+            <ProductColor id={product.data.id} />
+          </Box>
 
           <Button
             alignSelf={"flex-start"}

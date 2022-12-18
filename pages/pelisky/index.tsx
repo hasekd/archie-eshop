@@ -18,6 +18,7 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const Pelisky = ({ products }: any) => {
+  console.log(products);
   return (
     <Layout>
       <Flex flexWrap={"wrap"} justify={"center"} gap={"1rem"} mt={"3rem"}>

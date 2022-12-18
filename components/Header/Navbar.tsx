@@ -35,12 +35,14 @@ const Navbar = () => {
       align={"center"}
       h={"4.9rem"}
       fontWeight={700}
+      pos={"sticky"}
+      top={0}
     >
       <Link href={"/pelisky"}>
-        <Text {...LinkStyle}>PELISKY</Text>
+        <Text {...LinkStyle}>PELÍŠKY</Text>
       </Link>
       <Link href={"/o-nas"}>
-        <Text {...LinkStyle}>O NAS</Text>
+        <Text {...LinkStyle}>O NÁS</Text>
       </Link>
       <Link href={"/kontakt"}>
         <Text {...LinkStyle}>KONTAKT</Text>
