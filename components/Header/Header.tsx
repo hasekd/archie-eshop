@@ -7,6 +7,7 @@ import {
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
+  Spinner,
   Text,
 } from "@chakra-ui/react";
 import { FiShoppingCart } from "react-icons/fi";
@@ -32,7 +33,7 @@ const Header = () => {
   }, []);
 
   if (!data) {
-    return <div>Loading...</div>;
+    return <Spinner size={"xs"} />;
   }
 
   const totalPrice = formatCurrency(
@@ -48,7 +49,7 @@ const Header = () => {
       <Link href={"/"}>
         <Heading>Archie</Heading>
       </Link>
-      <Popover trigger="hover" placement="bottom-end">
+      <Popover trigger={"hover"} placement="bottom-end">
         <PopoverTrigger>
           <Flex
             align={"center"}
@@ -80,29 +81,34 @@ const Header = () => {
                 {cartQuantity}
               </Flex>
             </Button>
-            <Text fontSize={"1.3rem"}>{totalPrice} Kč</Text>
+            <Text fontSize={"1.4rem"} fontWeight={500}>
+              {totalPrice} Kč
+            </Text>
           </Flex>
         </PopoverTrigger>
-        <PopoverContent minW={{ base: "100%", lg: "max-content" }} p={"0.4rem"}>
+        <PopoverContent minW={"max-content"} p={"0.4rem"}>
           <PopoverBody>
             <Flex flexDir={"column"} gap={"1rem"}>
               {cartItems.map((product: any) => (
                 <CartItem key={product.id} {...product} />
               ))}
               <Flex justify={"space-between"}>
-                <Text fontSize={"1.3rem"}>CELKEM</Text>
-                <Text fontSize={"1.3rem"}>{totalPrice} Kč</Text>
+                <Text fontSize={{ base: "1rem", md: "1.3rem" }}>CELKEM</Text>
+                <Text fontSize={{ base: "1rem", md: "1.3rem" }}>
+                  {totalPrice} Kč
+                </Text>
               </Flex>
               <Link href={"/kosik"}>
                 <Flex
                   justify={"center"}
                   bgColor={theme.color.primary.blue}
-                  fontWeight={600}
-                  p={"0.7rem 0"}
-                  fontSize={"1.1rem"}
+                  p={{ base: "0.5rem 0", md: "0.7rem 0" }}
+                  fontSize={{ base: "1rem", md: "1.2rem" }}
+                  fontWeight={700}
                   textColor={theme.color.text.white}
+                  _hover={{ bgColor: theme.color.hover.blue }}
                 >
-                  Zobrazit kosik
+                  Zobrazit košík
                 </Flex>
               </Link>
             </Flex>

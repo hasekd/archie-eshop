@@ -1,9 +1,7 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { GetStaticProps } from "next";
-import Link from "next/link";
 import Layout from "../../components/Layout/Layout";
 import StoreItem from "../../components/StoreItem/StoreItem";
-import { formatName } from "../../utils/formatName";
 
 type ProductTypes = {
   id: number;
@@ -20,13 +18,18 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const Pelisky = ({ products }: any) => {
+  console.log(products);
   return (
     <Layout>
-      <Flex flexWrap={"wrap"} justify={"center"} gap={"1rem"} mt={"3rem"}>
+      <Flex
+        flexWrap={"wrap"}
+        justify={"center"}
+        gap={"1rem"}
+        mt={"3rem"}
+        p={"1rem"}
+      >
         {products.data.map((product: ProductTypes) => (
-          <Link key={product.id} href={"/pelisky/" + product.id}>
-            <StoreItem {...product.attributes} />
-          </Link>
+          <StoreItem key={product.id} id={product.id} {...product.attributes} />
         ))}
       </Flex>
     </Layout>

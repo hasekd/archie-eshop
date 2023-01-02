@@ -1,4 +1,13 @@
-import { Flex, Text, Img, Button, Divider, Input, Box } from "@chakra-ui/react";
+import {
+  Flex,
+  Text,
+  Image,
+  Button,
+  Divider,
+  Input,
+  Box,
+  Grid,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { theme } from "../../styles/theme";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
@@ -7,9 +16,11 @@ import { formatCurrency } from "../../utils/formatCurrency";
 type CartItemProps = {
   id: number;
   quantity: number;
+  formData: any;
+  // getFormData: (data: any) => any;
 };
 
-const CartProducts = ({ id, quantity }: CartItemProps) => {
+const CartProducts = ({ id, quantity }: any) => {
   const { removeFromCart, increaseCartQuantity, decreaseCartQuantity } =
     useShoppingCart();
 
@@ -34,31 +45,41 @@ const CartProducts = ({ id, quantity }: CartItemProps) => {
 
   return (
     <>
-      <Flex justify={"space-between"} align={"center"} gap={"4rem"}>
-        <Flex align={"center"} gap={"1rem"}>
-          <Img
+      <Grid gridTemplateColumns={"1fr 1fr 1fr"} justifyItems={"flex-end"}>
+        <Flex align={"center"} gap={"1rem"} justifySelf={"flex-start"}>
+          <Image
             src={`http://localhost:1337${product.attributes.img.data.attributes.url}`}
-            w={"8rem"}
-            h={"8rem"}
+            alt={product.attributes.title}
+            w={{ base: "2.5rem", sm: "6rem" }}
+            h={{ base: "2.5rem", sm: "6rem" }}
             objectFit={"cover"}
           />
-          <Flex flexDir={"column"} gap={1}>
-            <Text fontSize={"1.7rem"} letterSpacing={"0.3px"}>
+          <Flex flexDir={"column"} gap={1} w={{ base: "unset", lg: "15rem" }}>
+            <Text
+              fontSize={{
+                base: "0.8rem",
+                sm: "1.1rem",
+                lg: "1.35rem",
+              }}
+              letterSpacing={"0.3px"}
+            >
               {product.attributes.title}
             </Text>
-            <Flex gap={1}>
-              <Text>Velikost:</Text>
-            </Flex>
           </Flex>
         </Flex>
 
-        <Flex maxW="80px" pos={"relative"} align={"center"}>
+        <Flex
+          maxW={{ base: "5rem", sm: "8rem" }}
+          pos={"relative"}
+          align={"center"}
+        >
           <Button
             bgColor={"transparent"}
             _hover={{ bgColor: "none", color: theme.color.primary.blue }}
             pos={"absolute"}
             zIndex={1}
             _active={{ bgColor: "none" }}
+            fontSize={{ base: "1.1rem", lg: "1.3rem" }}
             onClick={() => decreaseCartQuantity(product.id)}
           >
             -
@@ -69,7 +90,7 @@ const CartProducts = ({ id, quantity }: CartItemProps) => {
             textAlign={"center"}
             _focus={{ bgColor: theme.color.primary.white }}
             onChange={(e: any) => e.target.value}
-            size={"lg"}
+            size={{ base: "sm", sm: "md", md: "lg" }}
           />
           <Button
             bgColor={"transparent"}
@@ -77,26 +98,28 @@ const CartProducts = ({ id, quantity }: CartItemProps) => {
             pos={"absolute"}
             right={0}
             _active={{ bgColor: "none" }}
+            fontSize={{ base: "1.1rem", lg: "1.2rem" }}
             onClick={() => increaseCartQuantity(product.id)}
           >
             +
           </Button>
         </Flex>
 
-        <Flex align={"center"}>
-          <Text fontSize={"1.4rem"}>
+        <Flex align={"center"} justify={"flex-end"} gap={2}>
+          <Text fontSize={{ base: "0.8rem", sm: "1.1rem", lg: "1.1rem" }}>
             {formatCurrency(product.attributes.price * quantity)} Kč
           </Text>
           <Button
             bgColor={"transparent"}
-            fontSize={"1.4rem"}
+            size={"xs"}
+            fontSize={{ base: "1.3rem", lg: "1.6rem" }}
             _hover={{ bgColor: "none", color: theme.color.primary.blue }}
             onClick={() => removeFromCart(product.id)}
           >
             &times;
           </Button>
         </Flex>
-      </Flex>
+      </Grid>
       <Divider />
     </>
   );
