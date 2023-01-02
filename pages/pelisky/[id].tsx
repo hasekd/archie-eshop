@@ -4,9 +4,8 @@ import {
   Button,
   Flex,
   Heading,
-  Img,
+  Image,
   Link,
-  Spinner,
   Text,
 } from "@chakra-ui/react";
 import { GetStaticPaths, GetStaticProps } from "next";
@@ -15,15 +14,6 @@ import { formatCurrency } from "../../utils/formatCurrency";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
 import { theme } from "../../styles/theme";
 import ProductColor from "../../components/StoreItem/ProductColor";
-
-const ChooseColorBoxStyles: BoxProps = {
-  borderRadius: "50%",
-  w: "3rem",
-  h: "3rem",
-  cursor: "pointer",
-  _hover: { boxShadow: "0 0 0 0.3rem #ccc", border: "0.1rem solid #fff" },
-  transition: "all 0.3s ease-out",
-};
 
 type ProductTypes = {
   id: number;
@@ -69,24 +59,31 @@ const ProductDetails = ({ product }: any) => {
         gap={"2rem"}
         justify={"center"}
         align={"center"}
-        mt={"3rem"}
+        p={"3rem 1.5rem"}
       >
-        <Img
+        <Image
           src={`http://localhost:1337${product.data.attributes.img.data.attributes.url}`}
-          w={"45rem"}
-          h={"45rem"}
+          w={{ base: "42rem", sm: "45rem" }}
+          h={{ base: "30rem", sm: "45rem" }}
           objectFit={"cover"}
         />
         <Flex flexDir={"column"} gap={"0.9rem"}>
-          <Heading fontWeight={"400"} fontSize={"2.7rem"}>
+          <Heading
+            fontWeight={"400"}
+            fontSize={{ base: "2.3rem", md: "2.7rem" }}
+          >
             {product.data.attributes.title}
           </Heading>
-          <Text fontSize={"2rem"}>
+          <Text fontSize={{ base: "1.8rem", md: "2rem" }}>
             {formatCurrency(product.data.attributes.price)} Kč
           </Text>
 
           <Box mt={"2rem"}>
-            <Text fontSize={"1.6rem"} mb={"1rem"}>
+            <Text
+              fontSize={{ base: "1.4rem", md: "1.6rem" }}
+              mb={"1rem"}
+              fontWeight={500}
+            >
               Vyberte barvu
             </Text>
             <ProductColor id={product.data.id} />
@@ -94,9 +91,9 @@ const ProductDetails = ({ product }: any) => {
 
           <Button
             alignSelf={"flex-start"}
-            p={"2rem 4.3rem"}
+            p={{ base: "1.8rem 3.7rem", md: "2rem 4.3rem" }}
             mt={"2rem"}
-            fontSize={"1.35rem"}
+            fontSize={{ base: "1.2rem", md: "1.35rem" }}
             fontWeight={700}
             bgColor={theme.color.primary.blue}
             textColor={theme.color.text.white}
@@ -107,7 +104,7 @@ const ProductDetails = ({ product }: any) => {
           </Button>
           <Text
             maxWidth={"42rem"}
-            fontSize={"1.3rem"}
+            fontSize={{ base: "1.2rem", md: "1.3rem" }}
             letterSpacing={"0.5px"}
             mt={"2rem"}
           >

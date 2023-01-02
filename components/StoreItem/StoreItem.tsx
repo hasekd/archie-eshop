@@ -30,7 +30,7 @@ const StoreItem = ({ id, title, price, img }: StoreItemProps) => {
             src={`http://localhost:1337${img.data.attributes.url}`}
             alt={title}
             borderRadius="lg"
-            height={{ base: "25rem", sm: "32rem" }}
+            height={{ base: "22rem", sm: "32rem" }}
             w={"100%"}
             objectFit={"cover"}
           />
@@ -39,22 +39,24 @@ const StoreItem = ({ id, title, price, img }: StoreItemProps) => {
           <Flex flexDir={"column"} gap={1}>
             <Link href={"/pelisky/" + id}>
               <Heading
-                fontSize={"1.8rem"}
+                fontSize={{ base: "1.5rem", sm: "1.8rem" }}
                 fontWeight={600}
                 _hover={{ textDecor: "underline" }}
               >
                 {title}
               </Heading>
             </Link>
-            <Text fontSize={"1.3rem"}>{formatCurrency(price)} Kč</Text>
+            <Text fontSize={{ base: "1.1rem", sm: "1.3rem" }}>
+              {formatCurrency(price)} Kč
+            </Text>
           </Flex>
 
           <Button
             textColor={theme.color.text.white}
             bgColor={theme.color.primary.blue}
             fontWeight={700}
-            fontSize={"1.2rem"}
-            p={"1.5rem 0"}
+            fontSize={{ base: "1.1rem", sm: "1.2rem" }}
+            p={{ base: "1.3rem 0", sm: "1.5rem 0" }}
             _hover={{ bgColor: theme.color.hover.blue }}
             onClick={() => increaseCartQuantity(id)}
           >

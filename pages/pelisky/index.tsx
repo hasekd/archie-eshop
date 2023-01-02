@@ -21,7 +21,13 @@ const Pelisky = ({ products }: any) => {
   console.log(products);
   return (
     <Layout>
-      <Flex flexWrap={"wrap"} justify={"center"} gap={"1rem"} mt={"3rem"}>
+      <Flex
+        flexWrap={"wrap"}
+        justify={"center"}
+        gap={"1rem"}
+        mt={"3rem"}
+        p={"1rem"}
+      >
         {products.data.map((product: ProductTypes) => (
           <StoreItem key={product.id} id={product.id} {...product.attributes} />
         ))}

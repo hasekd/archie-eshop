@@ -24,18 +24,25 @@ const HomePage = () => {
         textTransform={"uppercase"}
       >
         <Box w={"60%"} textAlign={"center"}>
-          <Text fontSize={"1.4rem"} fontWeight={700} mb={"1.3rem"}>
+          <Text
+            fontSize={{ base: "0.6rem", sm: "1.15rem", lg: "1.4rem" }}
+            fontWeight={700}
+            mb={"1.3rem"}
+          >
             Prohlédněte si naše ručně vyrobené pelíšky
           </Text>
-          <Heading fontSize={"5.5rem"} letterSpacing={"1px"}>
+          <Heading
+            fontSize={{ base: "2.8rem", sm: "5rem", lg: "5.5rem" }}
+            letterSpacing={"1px"}
+          >
             Maximální pohodlí a podpora
           </Heading>
         </Box>
         <Link href={"/pelisky"}>
           <Text
             border={"2px solid white"}
-            p={"0.9rem 3rem"}
-            fontSize={"1.2rem"}
+            p={{ base: "0.7rem 2rem", sm: "0.9rem 2.5rem", lg: "0.9rem 3rem" }}
+            fontSize={{ base: "0.7rem", sm: "1rem", lg: "1.2rem" }}
             fontWeight={700}
             mt={"2rem"}
             _hover={{
@@ -51,7 +58,7 @@ const HomePage = () => {
       <Flex
         justify={"center"}
         p={"4rem"}
-        gap={"10rem"}
+        gap={{ base: "5rem", lg: "10rem" }}
         textAlign={"center"}
         flexWrap={"wrap"}
       >

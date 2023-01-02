@@ -2,18 +2,14 @@ import { Box, BoxProps, Flex, Spinner } from "@chakra-ui/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-type ProductTypes = {
-  id: number;
-  attributes: { title: string; price: number; img: string };
-};
-
 const ChooseColorBoxStyles: BoxProps = {
   borderRadius: "50%",
-  w: "3rem",
-  h: "3rem",
+  w: { base: "3.5rem", md: "3.8rem" },
+  h: { base: "3.5rem", md: "3.8rem" },
   cursor: "pointer",
   mr: "0.7rem",
-  _hover: { boxShadow: "0 0 0 0.3rem #ccc", border: "0.1rem solid #fff" },
+  border: "0.15rem solid #fff",
+  _hover: { boxShadow: "0 0 0 0.3rem #ccc" },
   transition: "all 0.3s ease-out",
 };
 
@@ -35,7 +31,7 @@ const ProductColor = ({ id }: any) => {
 
   return (
     <Flex>
-      {data.map((product: ProductTypes) => (
+      {data.map((product: any) => (
         <Link key={product.id} href={"/pelisky/" + product.id}>
           {product.id !== id ? (
             <Box

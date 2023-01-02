@@ -9,18 +9,19 @@ import {
   Textarea,
   Text,
   Flex,
-  FlexProps,
   Select,
   Box,
   Divider,
+  InputProps,
 } from "@chakra-ui/react";
 import CartProducts from "./CartProducts";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { useRouter } from "next/router";
 
-const FlexInputGroup: FlexProps = {
-  gap: "1rem",
+const InputStyles: InputProps = {
+  h: "3.6rem",
+  size: "lg",
 };
 
 type Inputs = {
@@ -74,55 +75,80 @@ const UserInfoForm = () => {
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
       <FormControl>
-        <Flex justify={"center"} p={"3rem"} gap={"2rem"}>
-          <Flex flexDir={"column"} w={"50%"} gap={"1.3rem"}>
-            <Text fontSize={"1.4rem"} fontWeight={500}>
+        <Flex
+          flexDir={{ base: "column", lg: "unset" }}
+          justify={"center"}
+          p={"2rem 1rem"}
+          gap={"2rem"}
+        >
+          <Flex
+            flexDir={"column"}
+            gap={"1.3rem"}
+            w={"100%"}
+            order={{ base: "1", lg: "0" }}
+          >
+            <Text fontSize={{ base: "1.4rem", lg: "1.6rem" }} fontWeight={500}>
               Kontaktní informace
             </Text>
             <Input
               {...register("email")}
               placeholder="E-mail *"
               type={"email"}
-              size={"lg"}
+              {...InputStyles}
             />
-            <Text fontSize={"1.4rem"} fontWeight={500} mt={"1.5rem"}>
+            <Text
+              fontSize={{ base: "1.4rem", lg: "1.6rem" }}
+              fontWeight={500}
+              mt={"1.5rem"}
+            >
               Platební údaje
             </Text>
-            <Flex {...FlexInputGroup}>
+            <Flex>
               <Input
                 {...register("firstName")}
                 placeholder="Křestní jméno *"
-                size={"lg"}
+                {...InputStyles}
+                mr={"1rem"}
                 required
               />
               <Input
                 {...register("lastName")}
                 placeholder="Příjmení *"
-                size={"lg"}
+                {...InputStyles}
               />
             </Flex>
-            <Flex {...FlexInputGroup}>
+            <Flex>
               <Input
                 {...register("address")}
                 placeholder="Adresa *"
-                size={"lg"}
+                mr={"1rem"}
+                {...InputStyles}
               />
               <Input
                 {...register("addressNumber")}
                 placeholder="Číslo popisné *"
-                size={"lg"}
+                {...InputStyles}
               />
             </Flex>
-            <Flex {...FlexInputGroup}>
-              <Input {...register("city")} placeholder="Město *" size={"lg"} />
-              <Input {...register("zip")} placeholder="PSČ *" size={"lg"} />
+            <Flex>
+              <Input
+                {...register("city")}
+                placeholder="Město *"
+                mr={"1rem"}
+                {...InputStyles}
+              />
+              <Input
+                {...register("zip")}
+                placeholder="PSČ *"
+                {...InputStyles}
+              />
             </Flex>
 
             <Box>
-              <FormLabel fontSize={"0.9rem"} mb={0}>
+              <FormLabel fontSize={"1rem"} mb={0}>
                 Země:
               </FormLabel>
-              <Select {...register("country")} size={"lg"}>
+              <Select {...register("country")} size={"lg"} h={"3.6rem"}>
                 <option>Česká republika</option>
                 <option>Slovenská republika</option>
               </Select>
@@ -130,17 +156,18 @@ const UserInfoForm = () => {
             <Input
               {...register("phoneNumber")}
               placeholder="Telefon *"
-              size={"lg"}
+              {...InputStyles}
             />
 
             <Box mt={"2rem"}>
-              <Text fontSize={"1.2rem"} mb={"0.5rem"}>
+              <Text fontSize={{ base: "1rem", lg: "1.2rem" }} mb={"0.5rem"}>
                 Poznámka k objednávce
               </Text>
               <Textarea
                 {...register("message")}
                 minHeight="15rem"
                 placeholder="Např. poznámka ke zboží nebo k dopravě"
+                size={"lg"}
               />
             </Box>
 
@@ -148,7 +175,7 @@ const UserInfoForm = () => {
               mt="1rem"
               alignSelf={"center"}
               minW={"40%"}
-              p={"1.5rem"}
+              p={"1.5rem 2rem"}
               fontSize={"1.1rem"}
               fontWeight={700}
               bgColor={theme.color.primary.blue}
@@ -165,11 +192,11 @@ const UserInfoForm = () => {
             p={"3rem"}
             bgColor={theme.color.primary.gray}
           >
-            <Text fontSize={"1.4rem"} fontWeight={500}>
+            <Text fontSize={{ base: "1.4rem", lg: "1.6rem" }} fontWeight={500}>
               Vaše objednávka
             </Text>
-            <Divider borderColor={"#666666"} />
-            <Flex justify={"space-between"} ml={"13rem"}>
+            <Divider borderColor={"#666"} />
+            <Flex justify={"space-between"}>
               <Text>Produkt</Text>
               <Text>Množství</Text>
               <Text mr={"3rem"}>Celkem</Text>
@@ -177,16 +204,26 @@ const UserInfoForm = () => {
             {cartItems.map((product: any) => (
               <CartProducts key={product.id} {...product} />
             ))}
-            <Flex justify={"space-between"} fontSize={"1.2rem"}>
+            <Flex
+              justify={"space-between"}
+              fontSize={{ base: "1rem", lg: "1.2rem" }}
+            >
               <Text>Mezisoučet:</Text>
               <Text>{totalPrice} Kč</Text>
             </Flex>
-            <Flex justify={"space-between"} fontSize={"1.2rem"}>
+            <Flex
+              justify={"space-between"}
+              fontSize={{ base: "1rem", lg: "1.2rem" }}
+            >
               <Text>Platba a doprava:</Text>
               <Text>99 Kč</Text>
             </Flex>
             <Divider borderColor={"#666666"} />
-            <Flex justify={"space-between"} fontSize={"2rem"} fontWeight={700}>
+            <Flex
+              justify={"space-between"}
+              fontSize={{ base: "1.5rem", lg: "2rem" }}
+              fontWeight={700}
+            >
               <Text>Celkem:</Text>
               <Text>{totalPrice} Kč</Text>
             </Flex>
