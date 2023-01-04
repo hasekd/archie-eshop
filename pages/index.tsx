@@ -5,6 +5,7 @@ import Layout from "../components/Layout/Layout";
 import { theme } from "../styles/theme";
 import { MdOutlineBackHand, MdOutlineEco } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
+import Footer from "../components/Footer/Footer";
 
 const HomePage = () => {
   return (
@@ -64,39 +65,39 @@ const HomePage = () => {
       >
         <Flex
           flexDir={"column"}
-          fontSize={"2rem"}
+          fontSize={{ base: "1.7rem", md: "2rem" }}
           align={"center"}
           maxW={"28rem"}
         >
           <Icon as={MdOutlineBackHand} w={"3rem"} h={"3rem"} mb={"1.3rem"} />
           <Text fontWeight={600}>Ruční výroba</Text>
-          <Text fontSize={"1.4rem"}>
+          <Text fontSize={{ base: "1.3rem", md: "1.4rem" }}>
             Individuálně vyrobené s péčí a smyslem pro detail
           </Text>
         </Flex>
 
         <Flex
           flexDir={"column"}
-          fontSize={"2rem"}
+          fontSize={{ base: "1.7rem", md: "2rem" }}
           align={"center"}
           maxW={"28rem"}
         >
           <Icon as={AiOutlineHeart} w={"3rem"} h={"3rem"} mb={"1.3rem"} />
           <Text fontWeight={600}>Vyrobeno v Česku</Text>
-          <Text fontSize={"1.4rem"}>
+          <Text fontSize={{ base: "1.3rem", md: "1.4rem" }}>
             Naše produkty jsou vyráběny v České Republice
           </Text>
         </Flex>
 
         <Flex
           flexDir={"column"}
-          fontSize={"2rem"}
+          fontSize={{ base: "1.7rem", md: "2rem" }}
           align={"center"}
           maxW={"28rem"}
         >
           <Icon as={MdOutlineEco} w={"3.5rem"} h={"3.5rem"} mb={"1.3rem"} />
           <Text fontWeight={600}>Ekologické</Text>
-          <Text fontSize={"1.4rem"}>
+          <Text fontSize={{ base: "1.3rem", md: "1.4rem" }}>
             K výrobě používáme recyklovatelný materiál
           </Text>
         </Flex>

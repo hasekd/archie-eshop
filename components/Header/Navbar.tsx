@@ -31,12 +31,14 @@ const Navbar = () => {
       fontSize={"1.5rem"}
       justify={"center"}
       textColor={theme.color.text.white}
-      bgColor={theme.color.primary.black}
+      // bgColor={"#222"}
+      bgColor={theme.color.primary.blue}
       align={"center"}
       h={"4.9rem"}
       fontWeight={700}
       pos={"sticky"}
       top={0}
+      zIndex={10}
     >
       <Link href={"/pelisky"}>
         <Text {...LinkStyle}>PELÍŠKY</Text>
