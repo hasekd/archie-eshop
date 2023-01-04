@@ -1,5 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import { GetStaticProps } from "next";
+import BreadcrumbComponent from "../../components/Breadcrumb/BreadcrumbComponent";
 import Layout from "../../components/Layout/Layout";
 import StoreItem from "../../components/StoreItem/StoreItem";
 
@@ -18,16 +19,9 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const Pelisky = ({ products }: any) => {
-  console.log(products);
   return (
     <Layout>
-      <Flex
-        flexWrap={"wrap"}
-        justify={"center"}
-        gap={"1rem"}
-        mt={"3rem"}
-        p={"1rem"}
-      >
+      <Flex flexWrap={"wrap"} justify={"center"} gap={"1rem"} p={"3rem 1rem"}>
         {products.data.map((product: ProductTypes) => (
           <StoreItem key={product.id} id={product.id} {...product.attributes} />
         ))}

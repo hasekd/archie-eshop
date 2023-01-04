@@ -45,11 +45,17 @@ const Header = () => {
   );
 
   return (
-    <Flex justify={"space-between"} align={"center"} p={"2rem 4rem"}>
+    <Flex
+      justify={"space-between"}
+      align={"center"}
+      p={"2rem 4rem"}
+      pos={"relative"}
+      zIndex={100}
+    >
       <Link href={"/"}>
         <Heading>Archie</Heading>
       </Link>
-      <Popover trigger={"hover"} placement="bottom-end">
+      <Popover trigger="hover" placement="bottom-end">
         <PopoverTrigger>
           <Flex
             align={"center"}
@@ -86,7 +92,12 @@ const Header = () => {
             </Text>
           </Flex>
         </PopoverTrigger>
-        <PopoverContent minW={"max-content"} p={"0.4rem"}>
+        <PopoverContent
+          minW={"max-content"}
+          p={"0.4rem"}
+          zIndex={200}
+          pos={"relative"}
+        >
           <PopoverBody>
             <Flex flexDir={"column"} gap={"1rem"}>
               {cartItems.map((product: any) => (
