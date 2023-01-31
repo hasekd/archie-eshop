@@ -1,12 +1,5 @@
-import {
-  Button,
-  chakra,
-  Divider,
-  Flex,
-  Spinner,
-  Text,
-  Image,
-} from "@chakra-ui/react";
+import { Button, Divider, Flex, Spinner, Text } from "@chakra-ui/react";
+import Image from "next/image";
 import { theme } from "../../styles/theme";
 import { useEffect, useState } from "react";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
@@ -39,6 +32,8 @@ const CartItem = ({ id, quantity }: CartItemProps) => {
 
   if (product == null) return null;
 
+  const srcImage = `http://localhost:1337${product.attributes.img.data.attributes.url}`;
+
   return (
     <>
       <Flex justify={"space-between"} align={"center"} gap={"4rem"}>
@@ -56,11 +51,12 @@ const CartItem = ({ id, quantity }: CartItemProps) => {
         </Flex>
         <Flex align={"center"}>
           <Image
-            src={`http://localhost:1337${product.attributes.img.data.attributes.url}`}
+            loader={() => srcImage}
+            src={srcImage}
             alt={product.attributes.title}
-            w={{ base: "3rem", sm: "5rem" }}
-            h={{ base: "3rem", sm: "5rem" }}
-            objectFit={"cover"}
+            width={0}
+            height={0}
+            style={{ width: "4rem", height: "4rem", objectFit: "cover" }}
           />
           <Button
             bgColor={"transparent"}

@@ -1,12 +1,5 @@
-import {
-  Card,
-  CardBody,
-  Image,
-  Heading,
-  Text,
-  Button,
-  Flex,
-} from "@chakra-ui/react";
+import { Card, CardBody, Heading, Text, Button, Flex } from "@chakra-ui/react";
+import Image from "next/image";
 import Link from "next/link";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
 import { theme } from "../../styles/theme";
@@ -22,17 +15,19 @@ type StoreItemProps = {
 const StoreItem = ({ id, title, price, img }: StoreItemProps) => {
   const { increaseCartQuantity } = useShoppingCart();
 
+  const srcImage = `http://localhost:1337${img.data.attributes.url}`;
+
   return (
     <Card w="lg" _hover={{ boxShadow: theme.shadow.boxShadow }}>
       <CardBody>
         <Link href={"/pelisky/" + id}>
           <Image
-            src={`http://localhost:1337${img.data.attributes.url}`}
+            loader={() => srcImage}
+            src={srcImage}
             alt={title}
-            borderRadius="lg"
-            height={{ base: "22rem", sm: "32rem" }}
-            w={"100%"}
-            objectFit={"cover"}
+            width={0}
+            height={0}
+            style={{ width: "auto", height: "25rem", objectFit: "cover" }}
           />
         </Link>
         <Flex justify={"space-between"} mt={"6"} flexDir={"column"} gap={5}>

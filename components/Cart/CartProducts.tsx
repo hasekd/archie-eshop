@@ -1,12 +1,11 @@
 import {
   Flex,
   Text,
-  Image,
   Button,
   Divider,
   Input,
-  Box,
   Grid,
+  Image,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { theme } from "../../styles/theme";
@@ -16,11 +15,9 @@ import { formatCurrency } from "../../utils/formatCurrency";
 type CartItemProps = {
   id: number;
   quantity: number;
-  formData: any;
-  // getFormData: (data: any) => any;
 };
 
-const CartProducts = ({ id, quantity }: any) => {
+const CartProducts = ({ id, quantity }: CartItemProps) => {
   const { removeFromCart, increaseCartQuantity, decreaseCartQuantity } =
     useShoppingCart();
 
@@ -57,7 +54,7 @@ const CartProducts = ({ id, quantity }: any) => {
           <Flex flexDir={"column"} gap={1} w={{ base: "unset", lg: "15rem" }}>
             <Text
               fontSize={{
-                base: "0.8rem",
+                base: "0.7rem",
                 sm: "1.1rem",
                 lg: "1.35rem",
               }}
@@ -79,7 +76,7 @@ const CartProducts = ({ id, quantity }: any) => {
             pos={"absolute"}
             zIndex={1}
             _active={{ bgColor: "none" }}
-            fontSize={{ base: "1.1rem", lg: "1.3rem" }}
+            fontSize={{ base: "1rem", lg: "1.3rem" }}
             onClick={() => decreaseCartQuantity(product.id)}
           >
             -
@@ -98,7 +95,7 @@ const CartProducts = ({ id, quantity }: any) => {
             pos={"absolute"}
             right={0}
             _active={{ bgColor: "none" }}
-            fontSize={{ base: "1.1rem", lg: "1.2rem" }}
+            fontSize={{ base: "0.9rem", lg: "1.2rem" }}
             onClick={() => increaseCartQuantity(product.id)}
           >
             +
@@ -112,7 +109,7 @@ const CartProducts = ({ id, quantity }: any) => {
           <Button
             bgColor={"transparent"}
             size={"xs"}
-            fontSize={{ base: "1.3rem", lg: "1.6rem" }}
+            fontSize={{ base: "1.2rem", lg: "1.6rem" }}
             _hover={{ bgColor: "none", color: theme.color.primary.blue }}
             onClick={() => removeFromCart(product.id)}
           >

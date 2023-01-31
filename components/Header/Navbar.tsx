@@ -18,7 +18,7 @@ const LinkStyle: TextProps = {
     h: "0.15rem",
     bottom: "-0.2rem",
     left: "0",
-    bgColor: theme.color.primary.blue,
+    bgColor: theme.color.primary.white,
     transformOrigin: "bottom right",
     transition: "transform 0.3s ease-out",
   },

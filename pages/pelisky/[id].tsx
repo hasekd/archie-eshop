@@ -1,13 +1,5 @@
-import {
-  Box,
-  BoxProps,
-  Button,
-  Flex,
-  Heading,
-  Image,
-  Link,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
+import Image from "next/image";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Layout from "../../components/Layout/Layout";
 import { formatCurrency } from "../../utils/formatCurrency";
@@ -20,37 +12,10 @@ type ProductTypes = {
   attributes: { title: string; price: number; img: string; id: number };
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch("http://localhost:1337/api/products?populate=*");
-  const data = await res.json();
-
-  const paths = data.data.map((product: ProductTypes) => {
-    return {
-      params: { id: product.id.toString() },
-    };
-  });
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps: GetStaticProps = async (context) => {
-  const id = context.params?.id;
-  const res = await fetch(
-    "http://localhost:1337/api/products/" + id + "?populate=*"
-  );
-  const data = await res.json();
-
-  return {
-    props: { product: data },
-  };
-};
-
 const ProductDetails = ({ product }: any) => {
   const { increaseCartQuantity } = useShoppingCart();
-  console.log(product.data.id);
+
+  const srcImage = `http://localhost:1337${product.data.attributes.img.data.attributes.url}`;
 
   return (
     <Layout>
@@ -62,10 +27,12 @@ const ProductDetails = ({ product }: any) => {
         p={"3rem 1.5rem"}
       >
         <Image
-          src={`http://localhost:1337${product.data.attributes.img.data.attributes.url}`}
-          w={{ base: "42rem", sm: "45rem" }}
-          h={{ base: "30rem", sm: "45rem" }}
-          objectFit={"cover"}
+          loader={() => srcImage}
+          src={srcImage}
+          alt={product.data.attributes.title}
+          width={0}
+          height={0}
+          style={{ width: "50rem", height: "auto" }}
         />
         <Flex flexDir={"column"} gap={"0.9rem"}>
           <Heading
@@ -114,6 +81,34 @@ const ProductDetails = ({ product }: any) => {
       </Flex>
     </Layout>
   );
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const res = await fetch("http://localhost:1337/api/products?populate=*");
+  const data = await res.json();
+
+  const paths = data.data.map((product: ProductTypes) => {
+    return {
+      params: { id: product.id.toString() },
+    };
+  });
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const id = context.params?.id;
+  const res = await fetch(
+    "http://localhost:1337/api/products/" + id + "?populate=*"
+  );
+  const data = await res.json();
+
+  return {
+    props: { product: data },
+  };
 };
 
 export default ProductDetails;
