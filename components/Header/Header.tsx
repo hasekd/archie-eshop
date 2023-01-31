@@ -70,7 +70,11 @@ const Header = () => {
               bgColor={"transparent"}
               _hover={{ bgColor: "none" }}
             >
-              <Icon as={FiShoppingCart} w={"2rem"} h={"2rem"} />
+              <Icon
+                as={FiShoppingCart}
+                w={{ base: "1.7rem", md: "2rem" }}
+                h={{ base: "1.7rem", md: "2rem" }}
+              />
               <Flex
                 borderRadius={"50%"}
                 bgColor={theme.color.primary.blue}
@@ -87,7 +91,7 @@ const Header = () => {
                 {cartQuantity}
               </Flex>
             </Button>
-            <Text fontSize={"1.4rem"} fontWeight={500}>
+            <Text fontSize={{ base: "1.2rem", md: "1.4rem" }} fontWeight={500}>
               {totalPrice} Kč
             </Text>
           </Flex>

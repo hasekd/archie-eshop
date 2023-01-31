@@ -18,6 +18,8 @@ import CartProducts from "./CartProducts";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { useRouter } from "next/router";
+import { jsPDF } from "jspdf";
+import emailjs from "emailjs-com";
 
 const InputStyles: InputProps = {
   h: "3.6rem",
@@ -25,7 +27,7 @@ const InputStyles: InputProps = {
 };
 
 type Inputs = {
-  email: string;
+  to_email: string;
   firstName: string;
   lastName: string;
   address: string;
@@ -66,15 +68,61 @@ const UserInfoForm = () => {
       return total + (product?.attributes.price || 0) * cartItem.quantity;
     }, 0)
   );
+  let ids: any;
+  let quantities: any;
+  cartItems.map((item) => {
+    ids = item.id;
+    quantities = item.quantity;
+  });
 
-  const submitHandler: SubmitHandler<Inputs> = (data) => {
+  const product = data.find((i: any) => i.id === ids);
+
+  if (product == null) return null;
+
+  const submitHandler: SubmitHandler<any> = (data) => {
     console.log(data);
+
+    const doc = new jsPDF();
+    console.log(product.attributes.title);
+
+    emailjs
+      .send(
+        "service_y0wxym7",
+        "template_f4spqmp",
+        {
+          to_email: data.to_email,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          address: data.adress,
+          addressNumber: data.adressNumber,
+          zip: data.zip,
+          city: data.zip,
+          productName: product.attributes.title,
+          productQuantity: quantities,
+          productPrice: product.attributes.price,
+          totalPrice: totalPrice,
+        },
+        "7NCrXz-AjuPOxgTyl"
+      )
+      .then(
+        function (response) {
+          console.log("SUCCESS!", response.status, response.text);
+        },
+        function (error) {
+          console.log("FAILED...", error);
+        }
+      );
+
+    // doc.text("Invoice", 10, 10);
+    // doc.text(`Customer Name: ${data.firstName}`, 10, 20);
+    // doc.text(`Customer Email: ${data.email}`, 10, 30);
+
     router.push("/pokladna");
   };
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
-      <FormControl>
+      <FormControl maxW={"130rem"} m={"0 auto"}>
         <Flex
           flexDir={{ base: "column", lg: "unset" }}
           justify={"center"}
@@ -91,9 +139,10 @@ const UserInfoForm = () => {
               Kontaktní informace
             </Text>
             <Input
-              {...register("email")}
+              {...register("to_email")}
               placeholder="E-mail *"
               type={"email"}
+              name="to_email"
               {...InputStyles}
             />
             <Text
@@ -109,11 +158,13 @@ const UserInfoForm = () => {
                 placeholder="Křestní jméno *"
                 {...InputStyles}
                 mr={"1rem"}
+                name="firstName"
                 required
               />
               <Input
                 {...register("lastName")}
                 placeholder="Příjmení *"
+                name="lastName"
                 {...InputStyles}
               />
             </Flex>
@@ -122,11 +173,13 @@ const UserInfoForm = () => {
                 {...register("address")}
                 placeholder="Adresa *"
                 mr={"1rem"}
+                name="address"
                 {...InputStyles}
               />
               <Input
                 {...register("addressNumber")}
                 placeholder="Číslo popisné *"
+                name="addressNumber"
                 {...InputStyles}
               />
             </Flex>
@@ -135,11 +188,13 @@ const UserInfoForm = () => {
                 {...register("city")}
                 placeholder="Město *"
                 mr={"1rem"}
+                name="city"
                 {...InputStyles}
               />
               <Input
                 {...register("zip")}
                 placeholder="PSČ *"
+                name="zip"
                 {...InputStyles}
               />
             </Flex>
