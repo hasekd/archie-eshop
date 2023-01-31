@@ -87,8 +87,8 @@ const UserInfoForm = () => {
 
     emailjs
       .send(
-        "service_y0wxym7",
-        "template_f4spqmp",
+        process.env.NEXT_PUBLIC_SERVICE_ID as string,
+        process.env.NEXT_PUBLIC_TEMPLATE_ID as string,
         {
           to_email: data.to_email,
           firstName: data.firstName,
@@ -102,7 +102,7 @@ const UserInfoForm = () => {
           productPrice: product.attributes.price,
           totalPrice: totalPrice,
         },
-        "7NCrXz-AjuPOxgTyl"
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
       )
       .then(
         function (response) {

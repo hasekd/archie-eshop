@@ -15,7 +15,7 @@ type ProductTypes = {
 const ProductDetails = ({ product }: any) => {
   const { increaseCartQuantity } = useShoppingCart();
 
-  const srcImage = `http://localhost:1337${product.data.attributes.img.data.attributes.url}`;
+  const srcImage = `http://localhost:1337${product.attributes.img.data.attributes.url}`;
 
   return (
     <Layout>
@@ -29,7 +29,7 @@ const ProductDetails = ({ product }: any) => {
         <Image
           loader={() => srcImage}
           src={srcImage}
-          alt={product.data.attributes.title}
+          alt={product.attributes.title}
           width={0}
           height={0}
           style={{ width: "50rem", height: "auto" }}
@@ -39,10 +39,10 @@ const ProductDetails = ({ product }: any) => {
             fontWeight={"400"}
             fontSize={{ base: "2.3rem", md: "2.7rem" }}
           >
-            {product.data.attributes.title}
+            {product.attributes.title}
           </Heading>
           <Text fontSize={{ base: "1.8rem", md: "2rem" }}>
-            {formatCurrency(product.data.attributes.price)} Kč
+            {formatCurrency(product.attributes.price)} Kč
           </Text>
 
           <Box mt={"2rem"}>
@@ -53,7 +53,7 @@ const ProductDetails = ({ product }: any) => {
             >
               Vyberte barvu
             </Text>
-            <ProductColor id={product.data.id} />
+            <ProductColor id={product.id} />
           </Box>
 
           <Button
@@ -75,12 +75,28 @@ const ProductDetails = ({ product }: any) => {
             letterSpacing={"0.5px"}
             mt={"2rem"}
           >
-            {product.data.attributes.description}
+            {product.attributes.description}
           </Text>
         </Flex>
       </Flex>
     </Layout>
   );
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { params } = context;
+  const productName = params?.slug;
+  const res = await fetch(
+    "http://localhost:1337/api/products/" + productName + "?populate=*"
+  );
+  const data = await res.json();
+
+  const product = data.data.find((product: any) => product.id === productName);
+
+  return {
+    props: { product: product },
+    revalidate: 1800,
+  };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -89,25 +105,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const paths = data.data.map((product: ProductTypes) => {
     return {
-      params: { id: product.id.toString() },
+      params: { slug: product.id.toString() },
     };
   });
 
   return {
     paths,
     fallback: false,
-  };
-};
-
-export const getStaticProps: GetStaticProps = async (context) => {
-  const id = context.params?.id;
-  const res = await fetch(
-    "http://localhost:1337/api/products/" + id + "?populate=*"
-  );
-  const data = await res.json();
-
-  return {
-    props: { product: data },
   };
 };
 

@@ -9,15 +9,6 @@ type ProductTypes = {
   attributes: { title: string; price: number; img: string };
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch("http://localhost:1337/api/products?populate=*");
-  const data = await res.json();
-
-  return {
-    props: { products: data },
-  };
-};
-
 const Pelisky = ({ products }: any) => {
   return (
     <Layout>
@@ -28,6 +19,16 @@ const Pelisky = ({ products }: any) => {
       </Flex>
     </Layout>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const res = await fetch("http://localhost:1337/api/products?populate=*");
+  const data = await res.json();
+
+  return {
+    props: { products: data },
+    revalidate: 800,
+  };
 };
 
 export default Pelisky;
