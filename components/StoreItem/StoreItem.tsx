@@ -12,7 +12,7 @@ type StoreItemProps = {
   img: any;
 };
 
-const StoreItem = ({ id, title, price, img }: StoreItemProps) => {
+const StoreItem = ({ id, title, price, img, slug }: StoreItemProps) => {
   const { increaseCartQuantity } = useShoppingCart();
 
   const srcImage = `http://localhost:1337${img.data.attributes.url}`;
@@ -20,7 +20,7 @@ const StoreItem = ({ id, title, price, img }: StoreItemProps) => {
   return (
     <Card w="lg" _hover={{ boxShadow: theme.shadow.boxShadow }}>
       <CardBody>
-        <Link href={"/pelisky/" + id}>
+        <Link href={"/pelisky/" + slug}>
           <Image
             loader={() => srcImage}
             src={srcImage}
@@ -32,7 +32,7 @@ const StoreItem = ({ id, title, price, img }: StoreItemProps) => {
         </Link>
         <Flex justify={"space-between"} mt={"6"} flexDir={"column"} gap={5}>
           <Flex flexDir={"column"} gap={1}>
-            <Link href={"/pelisky/" + id}>
+            <Link href={"/pelisky/" + slug}>
               <Heading
                 fontSize={{ base: "1.5rem", sm: "1.8rem" }}
                 fontWeight={600}

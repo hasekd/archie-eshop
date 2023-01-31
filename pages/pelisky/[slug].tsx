@@ -9,10 +9,17 @@ import ProductColor from "../../components/StoreItem/ProductColor";
 
 type ProductTypes = {
   id: number;
-  attributes: { title: string; price: number; img: string; id: number };
+  attributes: {
+    title: string;
+    price: number;
+    img: string;
+    id: number;
+    slug: string;
+  };
 };
 
 const ProductDetails = ({ product }: any) => {
+  console.log(product.attributes.slug);
   const { increaseCartQuantity } = useShoppingCart();
 
   const srcImage = `http://localhost:1337${product.attributes.img.data.attributes.url}`;
@@ -91,10 +98,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
   );
   const data = await res.json();
 
-  const product = data.data.find((product: any) => product.id === productName);
-
   return {
-    props: { product: product },
+    props: { product: data.data },
     revalidate: 1800,
   };
 };
@@ -105,12 +110,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const paths = data.data.map((product: ProductTypes) => {
     return {
-      params: { slug: product.id.toString() },
+      params: { slug: product.attributes.slug },
     };
   });
 
   return {
-    paths,
+    paths: paths,
     fallback: false,
   };
 };
