@@ -72,7 +72,7 @@ const ProductDetails = ({ product }: any) => {
             bgColor={theme.color.primary.blue}
             textColor={theme.color.text.white}
             _hover={{ bgColor: theme.color.hover.blue }}
-            onClick={() => increaseCartQuantity(product.data.id)}
+            onClick={() => increaseCartQuantity(product.id)}
           >
             Přidat do košíku
           </Button>

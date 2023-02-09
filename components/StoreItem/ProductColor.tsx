@@ -1,11 +1,12 @@
 import { Box, BoxProps, Flex, Spinner } from "@chakra-ui/react";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const ChooseColorBoxStyles: BoxProps = {
   borderRadius: "50%",
-  w: { base: "3.5rem", md: "3.8rem" },
-  h: { base: "3.5rem", md: "3.8rem" },
+  w: "3.8rem",
+  h: "3.8rem",
   cursor: "pointer",
   mr: "0.7rem",
   border: "0.15rem solid #fff",
@@ -34,12 +35,23 @@ const ProductColor = ({ id }: any) => {
       {data.map((product: any) => (
         <Link key={product.id} href={"/pelisky/" + product.attributes.slug}>
           {product.id !== id ? (
-            <Box
-              {...ChooseColorBoxStyles}
-              bgImage={`http://localhost:1337${product.attributes.img.data.attributes.url}`}
-              bgPosition={"center"}
-              bgSize={"cover"}
-            />
+            <Box {...ChooseColorBoxStyles}>
+              <Image
+                loader={() =>
+                  `http://localhost:1337${product.attributes.img.data.attributes.url}`
+                }
+                src={`http://localhost:1337${product.attributes.img.data.attributes.url}`}
+                alt={product.attributes.title}
+                width={0}
+                height={0}
+                style={{
+                  borderRadius: "50%",
+                  width: "3.5rem",
+                  height: "3.5rem",
+                  objectFit: "cover",
+                }}
+              />
+            </Box>
           ) : null}
         </Link>
       ))}

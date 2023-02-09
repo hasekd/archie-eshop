@@ -1,30 +1,36 @@
-import { Box, Flex, Heading, Icon, Text } from "@chakra-ui/react";
+import { Box, Divider, Flex, Heading, Icon, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
 import Layout from "../components/Layout/Layout";
 import { theme } from "../styles/theme";
 import { MdOutlineBackHand, MdOutlineEco } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
-import Footer from "../components/Footer/Footer";
+import Image from "next/image";
+import NewProducts from "../components/NewProducts/NewProducts";
 
 const HomePage = () => {
   return (
     <Layout>
-      <Flex
-        bgImage={
-          "https://images.unsplash.com/photo-1598397678806-f5e6785369cd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-        }
-        w={"100%"}
-        h={"90vh"}
-        bgPosition={"center"}
-        bgSize={"cover"}
-        textColor={"white"}
-        flexDir={"column"}
-        align={"center"}
-        justify={"center"}
-        textTransform={"uppercase"}
-      >
-        <Box w={"60%"} textAlign={"center"}>
+      <Box pos={"relative"} textTransform={"uppercase"} textColor={"#fff"}>
+        <Image
+          src={require("../public/images/header-img.jpeg")}
+          alt="dog sleeping"
+          width={0}
+          height={0}
+          style={{
+            width: "100%",
+            height: "90vh",
+            objectFit: "cover",
+            filter: "brightness(70%)",
+          }}
+        />
+        <Box
+          textAlign={"center"}
+          pos={"absolute"}
+          top={"40%"}
+          left={"50%"}
+          transform={"translate(-50%, -40%)"}
+        >
           <Text
             fontSize={{ base: "0.6rem", sm: "1.15rem", lg: "1.4rem" }}
             fontWeight={700}
@@ -38,27 +44,38 @@ const HomePage = () => {
           >
             Maximální pohodlí a podpora
           </Heading>
+          <Link href={"/pelisky"}>
+            <Text
+              display={"inline-block"}
+              border={"2px solid white"}
+              p={{
+                base: "0.7rem 2rem",
+                sm: "0.9rem 2.5rem",
+                lg: "0.9rem 3rem",
+              }}
+              fontSize={{ base: "0.7rem", sm: "1rem", lg: "1.2rem" }}
+              fontWeight={700}
+              mt={"2rem"}
+              _hover={{
+                bgColor: theme.color.primary.white,
+                textColor: theme.color.text.black,
+              }}
+              transition={"all 0.3s ease-out"}
+            >
+              Zobrazit pelíšky
+            </Text>
+          </Link>
         </Box>
-        <Link href={"/pelisky"}>
-          <Text
-            border={"2px solid white"}
-            p={{ base: "0.7rem 2rem", sm: "0.9rem 2.5rem", lg: "0.9rem 3rem" }}
-            fontSize={{ base: "0.7rem", sm: "1rem", lg: "1.2rem" }}
-            fontWeight={700}
-            mt={"2rem"}
-            _hover={{
-              bgColor: theme.color.primary.white,
-              textColor: theme.color.primary.blue,
-            }}
-            transition={"all 0.3s ease-out"}
-          >
-            Zobrazit pelíšky
-          </Text>
-        </Link>
-      </Flex>
+      </Box>
+
+      <NewProducts />
+
+      <Divider borderColor={"#ccc"} />
       <Flex
         justify={"center"}
-        p={"4rem"}
+        align={"center"}
+        p={"0 1rem"}
+        minH={"25rem"}
         gap={{ base: "5rem", lg: "10rem" }}
         textAlign={"center"}
         flexWrap={"wrap"}
@@ -69,7 +86,7 @@ const HomePage = () => {
           align={"center"}
           maxW={"28rem"}
         >
-          <Icon as={MdOutlineBackHand} w={"3rem"} h={"3rem"} mb={"1.3rem"} />
+          <Icon as={MdOutlineBackHand} w={"3rem"} h={"3rem"} mb={"1.1rem"} />
           <Text fontWeight={600}>Ruční výroba</Text>
           <Text fontSize={{ base: "1.3rem", md: "1.4rem" }}>
             Individuálně vyrobené s péčí a smyslem pro detail
@@ -82,7 +99,7 @@ const HomePage = () => {
           align={"center"}
           maxW={"28rem"}
         >
-          <Icon as={AiOutlineHeart} w={"3rem"} h={"3rem"} mb={"1.3rem"} />
+          <Icon as={AiOutlineHeart} w={"3rem"} h={"3rem"} mb={"1.1rem"} />
           <Text fontWeight={600}>Vyrobeno v Česku</Text>
           <Text fontSize={{ base: "1.3rem", md: "1.4rem" }}>
             Naše produkty jsou vyráběny v České Republice
@@ -95,7 +112,7 @@ const HomePage = () => {
           align={"center"}
           maxW={"28rem"}
         >
-          <Icon as={MdOutlineEco} w={"3.5rem"} h={"3.5rem"} mb={"1.3rem"} />
+          <Icon as={MdOutlineEco} w={"3.5rem"} h={"3.5rem"} mb={"1.1rem"} />
           <Text fontWeight={600}>Ekologické</Text>
           <Text fontSize={{ base: "1.3rem", md: "1.4rem" }}>
             K výrobě používáme recyklovatelný materiál

@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Divider } from "@chakra-ui/react";
+import { Box, Flex, Text, Divider, Button } from "@chakra-ui/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { theme } from "../styles/theme";
@@ -8,7 +8,7 @@ import { formatCurrency } from "../utils/formatCurrency";
 import { useShoppingCart } from "../context/ShoppingCartContext";
 
 const Checkout = () => {
-  const { cartItems } = useShoppingCart();
+  const { cartItems, formData, setCartItems } = useShoppingCart();
 
   const [data, setData] = useState<any>();
 
@@ -33,63 +33,122 @@ const Checkout = () => {
     }, 0)
   );
 
+  console.log(formData);
+
   return (
     <>
       <CartHeader />
-      <Flex justify={"space-between"} align={"center"} p={"3rem"}>
+      <Flex flexDir={"column"} align={"center"} p={"2rem 1rem"}>
         <Flex
+          flexDir={{ base: "column", lg: "unset" }}
           justify={"space-between"}
-          minW={"40rem"}
-          minH={"5rem"}
-          border={"1px solid black"}
-          borderRadius={"4px"}
-          p={"1rem"}
-          align={"center"}
+          gap={"4rem"}
         >
-          <Box>
-            <Text fontWeight={600} fontSize={"1.45rem"}>
-              Kontakt:
+          <Flex flexDir={"column"} gap={"1.5rem"}>
+            <Flex
+              justify={"space-between"}
+              minW={{ base: "unset", md: "45rem" }}
+              minH={{ base: "4rem", md: "5rem" }}
+              border={"1px solid black"}
+              borderRadius={"4px"}
+              p={"1rem"}
+              align={"center"}
+            >
+              <Flex align={"center"} gap={"0.5rem"}>
+                <Text
+                  fontWeight={600}
+                  fontSize={{ base: "1.2rem", md: "1.45rem" }}
+                >
+                  Kontakt:
+                </Text>
+                <Text fontSize={{ base: "1.1rem", md: "1.3rem" }}>
+                  {formData.to_email}
+                </Text>
+              </Flex>
+              <Link href={"/kosik"}>
+                <Text
+                  fontSize={{ base: "1rem", md: "1.2rem" }}
+                  color={theme.color.primary.blue}
+                >
+                  Změnit
+                </Text>
+              </Link>
+            </Flex>
+
+            <Flex
+              justify={"space-between"}
+              minW={{ base: "unset", md: "45rem" }}
+              minH={{ base: "4rem", md: "5rem" }}
+              border={"1px solid black"}
+              borderRadius={"4px"}
+              p={"1rem"}
+              align={"center"}
+            >
+              <Flex align={"center"} gap={"0.5rem"}>
+                <Text
+                  fontWeight={600}
+                  fontSize={{ base: "1.2rem", md: "1.45rem" }}
+                >
+                  Doručení:
+                </Text>
+                <Text
+                  fontSize={{ base: "1.1rem", md: "1.3rem" }}
+                >{`${formData.address} ${formData.addressNumber}, ${formData.city}, ${formData.zip}`}</Text>
+              </Flex>
+              <Link href={"/kosik"}>
+                <Text
+                  fontSize={{ base: "1rem", md: "1.2rem" }}
+                  color={theme.color.primary.blue}
+                >
+                  Změnit
+                </Text>
+              </Link>
+            </Flex>
+          </Flex>
+          <Flex
+            flexDir={"column"}
+            gap={"1rem"}
+            p={"3rem"}
+            bgColor={theme.color.primary.gray}
+          >
+            <Text fontSize={{ base: "1.4rem", lg: "1.6rem" }} fontWeight={500}>
+              Vaše objednávka
             </Text>
-            <Text></Text>
-          </Box>
-          <Link href={"/kosik"}>
-            <Text fontSize={"1.2rem"} color={theme.color.primary.blue}>
-              Změnit
-            </Text>
-          </Link>
-        </Flex>
-        <Flex
-          flexDir={"column"}
-          gap={"1rem"}
-          p={"3rem"}
-          bgColor={theme.color.primary.gray}
-        >
-          <Text fontSize={"1.6rem"} fontWeight={500}>
-            Vaše objednávka
-          </Text>
-          <Divider borderColor={"#666"} />
-          <Flex justify={"space-between"} ml={"13rem"}>
-            <Text>Produkt</Text>
-            <Text>Množství</Text>
-            <Text mr={"3rem"}>Celkem</Text>
-          </Flex>
-          {cartItems.map((product: any) => (
-            <CartProducts key={product.id} {...product} />
-          ))}
-          <Flex justify={"space-between"} fontSize={"1.2rem"}>
-            <Text>Mezisoučet:</Text>
-            <Text>{totalPrice} Kč</Text>
-          </Flex>
-          <Flex justify={"space-between"} fontSize={"1.2rem"}>
-            <Text>Platba a doprava:</Text>
-            <Text>99 Kč</Text>
-          </Flex>
-          <Divider borderColor={"#666666"} />
-          <Flex justify={"space-between"} fontSize={"2rem"} fontWeight={700}>
-            <Text>Celkem:</Text>
-            <Text>{totalPrice} Kč</Text>
+            <Divider borderColor={"#666"} />
+            <Flex justify={"space-between"} ml={"13rem"}>
+              <Text>Produkt</Text>
+              <Text>Množství</Text>
+              <Text mr={"3rem"}>Celkem</Text>
+            </Flex>
+            {cartItems.map((product: any) => (
+              <CartProducts key={product.id} {...product} />
+            ))}
+            <Flex
+              justify={"space-between"}
+              fontSize={{ base: "1rem", lg: "1.2rem" }}
+            >
+              <Text>Mezisoučet:</Text>
+              <Text>{totalPrice} Kč</Text>
+            </Flex>
+            <Flex
+              justify={"space-between"}
+              fontSize={{ base: "1rem", lg: "1.2rem" }}
+            >
+              <Text>Platba a doprava:</Text>
+              <Text>99 Kč</Text>
+            </Flex>
+            <Divider borderColor={"#666666"} />
+            <Flex
+              justify={"space-between"}
+              fontSize={{ base: "1.5rem", lg: "2rem" }}
+              fontWeight={700}
+            >
+              <Text>Celkem:</Text>
+              <Text>{totalPrice} Kč</Text>
+            </Flex>
           </Flex>
         </Flex>
+        <Button onClick={() => setCartItems([])}>Objednat</Button>
       </Flex>
     </>
   );

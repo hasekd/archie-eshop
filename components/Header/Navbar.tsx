@@ -31,7 +31,6 @@ const Navbar = () => {
       fontSize={"1.5rem"}
       justify={"center"}
       textColor={theme.color.text.white}
-      // bgColor={"#222"}
       bgColor={theme.color.primary.blue}
       align={"center"}
       h={"4.9rem"}
@@ -40,6 +39,9 @@ const Navbar = () => {
       top={0}
       zIndex={10}
     >
+      <Link href={"/"}>
+        <Text {...LinkStyle}>ÚVOD</Text>
+      </Link>
       <Link href={"/pelisky"}>
         <Text {...LinkStyle}>PELÍŠKY</Text>
       </Link>

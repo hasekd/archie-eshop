@@ -13,13 +13,13 @@ type StoreItemProps = {
   slug: string;
 };
 
-const StoreItem = ({ id, title, price, img, slug }: StoreItemProps) => {
+const NewProductItem = ({ id, title, price, img, slug }: StoreItemProps) => {
   const { increaseCartQuantity } = useShoppingCart();
 
   const srcImage = `http://localhost:1337${img.data.attributes.url}`;
 
   return (
-    <Card w="lg" _hover={{ boxShadow: theme.shadow.boxShadow }}>
+    <Card w="md" _hover={{ boxShadow: theme.shadow.boxShadow }}>
       <CardBody>
         <Link href={"/pelisky/" + slug}>
           <Image
@@ -28,14 +28,14 @@ const StoreItem = ({ id, title, price, img, slug }: StoreItemProps) => {
             alt={title}
             width={0}
             height={0}
-            style={{ width: "auto", height: "25rem", objectFit: "cover" }}
+            style={{ width: "auto", height: "20rem", objectFit: "cover" }}
           />
         </Link>
         <Flex justify={"space-between"} mt={"6"} flexDir={"column"} gap={5}>
           <Flex flexDir={"column"} gap={1}>
             <Link href={"/pelisky/" + slug}>
               <Heading
-                fontSize={{ base: "1.5rem", sm: "1.8rem" }}
+                fontSize={{ base: "1.4rem", sm: "1.6rem" }}
                 fontWeight={600}
                 _hover={{ textDecor: "underline" }}
               >
@@ -64,4 +64,4 @@ const StoreItem = ({ id, title, price, img, slug }: StoreItemProps) => {
   );
 };
 
-export default StoreItem;
+export default NewProductItem;

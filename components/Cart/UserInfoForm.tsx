@@ -19,6 +19,7 @@ import { useShoppingCart } from "../../context/ShoppingCartContext";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { useRouter } from "next/router";
 import { jsPDF } from "jspdf";
+import { v4 as uuidv4 } from "uuid";
 import emailjs from "emailjs-com";
 
 const InputStyles: InputProps = {
@@ -42,11 +43,32 @@ type Inputs = {
 const UserInfoForm = () => {
   const { register, handleSubmit } = useForm<Inputs>();
 
-  const { cartItems } = useShoppingCart();
+  const { cartItems, setFormData, formData } = useShoppingCart();
 
   const router = useRouter();
 
   const [data, setData] = useState<any>();
+
+  useEffect(() => {
+    const storedFormData = localStorage.getItem("formData");
+    if (storedFormData) {
+      setFormData(JSON.parse(storedFormData));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("formData", JSON.stringify(formData));
+  }, [formData]);
+
+  // useEffect(() => {
+  //   const timeoutId = setTimeout(() => {
+  //     localStorage.removeItem("formData");
+  //   }, 20000); // 24 hours
+
+  //   return () => {
+  //     clearTimeout(timeoutId);
+  //   };
+  // }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,22 +90,27 @@ const UserInfoForm = () => {
       return total + (product?.attributes.price || 0) * cartItem.quantity;
     }, 0)
   );
-  let ids: any;
-  let quantities: any;
-  cartItems.map((item) => {
-    ids = item.id;
-    quantities = item.quantity;
+
+  const current = new Date();
+
+  const cartContent: any = [];
+
+  cartItems.forEach((item) => {
+    const product = data.find((i: any) => i.id === item.id);
+
+    cartContent.push({
+      productName: product.attributes.title,
+      productQuantity: item.quantity,
+      productPrice: product.attributes.price,
+    });
   });
 
-  const product = data.find((i: any) => i.id === ids);
+  if (cartContent.lenght === 0) return null;
 
-  if (product == null) return null;
+  const orderId = parseInt(uuidv4().replace(/-/g, "").substring(0, 8), 16);
 
   const submitHandler: SubmitHandler<any> = (data) => {
-    console.log(data);
-
-    const doc = new jsPDF();
-    console.log(product.attributes.title);
+    setFormData(data);
 
     emailjs
       .send(
@@ -91,15 +118,15 @@ const UserInfoForm = () => {
         process.env.NEXT_PUBLIC_TEMPLATE_ID as string,
         {
           to_email: data.to_email,
+          orderDate: `${current.getDate()}.${current.getMonth()}.${current.getFullYear()}`,
+          orderId: orderId,
           firstName: data.firstName,
           lastName: data.lastName,
-          address: data.adress,
-          addressNumber: data.adressNumber,
+          address: data.address,
+          addressNumber: data.addressNumber,
           zip: data.zip,
-          city: data.zip,
-          productName: product.attributes.title,
-          productQuantity: quantities,
-          productPrice: product.attributes.price,
+          city: data.city,
+          products: cartContent,
           totalPrice: totalPrice,
         },
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
@@ -112,10 +139,6 @@ const UserInfoForm = () => {
           console.log("FAILED...", error);
         }
       );
-
-    // doc.text("Invoice", 10, 10);
-    // doc.text(`Customer Name: ${data.firstName}`, 10, 20);
-    // doc.text(`Customer Email: ${data.email}`, 10, 30);
 
     router.push("/pokladna");
   };
@@ -143,6 +166,11 @@ const UserInfoForm = () => {
               placeholder="E-mail *"
               type={"email"}
               name="to_email"
+              value={formData.to_email || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, to_email: e.target.value })
+              }
+              required
               {...InputStyles}
             />
             <Text
@@ -159,12 +187,20 @@ const UserInfoForm = () => {
                 {...InputStyles}
                 mr={"1rem"}
                 name="firstName"
+                value={formData.firstName || ""}
+                onChange={(e) =>
+                  setFormData({ ...formData, firstName: e.target.value })
+                }
                 required
               />
               <Input
                 {...register("lastName")}
                 placeholder="Příjmení *"
                 name="lastName"
+                value={formData.lastName || ""}
+                onChange={(e) =>
+                  setFormData({ ...formData, lastName: e.target.value })
+                }
                 {...InputStyles}
               />
             </Flex>
@@ -174,12 +210,20 @@ const UserInfoForm = () => {
                 placeholder="Adresa *"
                 mr={"1rem"}
                 name="address"
+                value={formData.address || ""}
+                onChange={(e) =>
+                  setFormData({ ...formData, address: e.target.value })
+                }
                 {...InputStyles}
               />
               <Input
                 {...register("addressNumber")}
                 placeholder="Číslo popisné *"
                 name="addressNumber"
+                value={formData.addressNumber || ""}
+                onChange={(e) =>
+                  setFormData({ ...formData, addressNumber: e.target.value })
+                }
                 {...InputStyles}
               />
             </Flex>
@@ -189,12 +233,20 @@ const UserInfoForm = () => {
                 placeholder="Město *"
                 mr={"1rem"}
                 name="city"
+                value={formData.city || ""}
+                onChange={(e) =>
+                  setFormData({ ...formData, city: e.target.value })
+                }
                 {...InputStyles}
               />
               <Input
                 {...register("zip")}
                 placeholder="PSČ *"
                 name="zip"
+                value={formData.zip || ""}
+                onChange={(e) =>
+                  setFormData({ ...formData, zip: e.target.value })
+                }
                 {...InputStyles}
               />
             </Flex>
@@ -203,7 +255,15 @@ const UserInfoForm = () => {
               <FormLabel fontSize={"1rem"} mb={0}>
                 Země:
               </FormLabel>
-              <Select {...register("country")} size={"lg"} h={"3.6rem"}>
+              <Select
+                {...register("country")}
+                size={"lg"}
+                h={"3.6rem"}
+                value={formData.country || ""}
+                onChange={(e) =>
+                  setFormData({ ...formData, country: e.target.value })
+                }
+              >
                 <option>Česká republika</option>
                 <option>Slovenská republika</option>
               </Select>
@@ -211,6 +271,11 @@ const UserInfoForm = () => {
             <Input
               {...register("phoneNumber")}
               placeholder="Telefon *"
+              name="phoneNumber"
+              value={formData.phoneNumber || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, phoneNumber: e.target.value })
+              }
               {...InputStyles}
             />
 
@@ -223,6 +288,10 @@ const UserInfoForm = () => {
                 minHeight="15rem"
                 placeholder="Např. poznámka ke zboží nebo k dopravě"
                 size={"lg"}
+                value={formData.message || ""}
+                onChange={(e) =>
+                  setFormData({ ...formData, message: e.target.value })
+                }
               />
             </Box>
 

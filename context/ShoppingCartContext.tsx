@@ -1,4 +1,11 @@
-import React, { createContext, ReactNode, useContext } from "react";
+import React, {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useContext,
+  useState,
+} from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
 type ShoppingCartProviderProps = {
@@ -17,6 +24,9 @@ type ShoppingCartContext = {
   removeFromCart: (id: number) => void;
   cartQuantity: number;
   cartItems: CartItem[];
+  formData: any;
+  setFormData: Dispatch<SetStateAction<{}>>;
+  setCartItems: any;
 };
 
 const ShoppingCartContext = createContext({} as ShoppingCartContext);
@@ -32,6 +42,7 @@ export const ShoppingCartProvider = ({
     "shopping-cart",
     []
   );
+  const [formData, setFormData] = useState({});
 
   const cartQuantity = cartItems.reduce(
     (quantity, item) => item.quantity + quantity,
@@ -88,7 +99,10 @@ export const ShoppingCartProvider = ({
         decreaseCartQuantity,
         removeFromCart,
         cartItems,
+        setCartItems,
         cartQuantity,
+        formData,
+        setFormData,
       }}
     >
       {children}
