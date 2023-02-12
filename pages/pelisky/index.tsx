@@ -1,10 +1,10 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Box, Divider, Flex, Heading, Text } from "@chakra-ui/react";
 import { GetStaticProps } from "next";
 import { useState } from "react";
-import BreadcrumbComponent from "../../components/Breadcrumb/BreadcrumbComponent";
 import Filter from "../../components/Filter/Filter";
 import Layout from "../../components/Layout/Layout";
 import StoreItem from "../../components/StoreItem/StoreItem";
+import { theme } from "../../styles/theme";
 
 type ProductTypes = {
   id: number;
@@ -52,15 +52,24 @@ const Pelisky = ({ products }: any) => {
 
   return (
     <Layout>
+      <Box maxW={"9.8rem"} m={"3rem auto 0"}>
+        <Heading
+          fontSize={"3rem"}
+          textAlign={"center"}
+          mb={"1.2rem"}
+          fontWeight={600}
+        >
+          Pelíšky
+        </Heading>
+        <Divider borderColor={theme.color.primary.blue} borderWidth={"2px"} />
+      </Box>
       <Text
         textAlign={"center"}
         fontSize={"2.5rem"}
         fontWeight={500}
         mt={"2rem"}
-      >
-        Pelíšky
-      </Text>
-      <Flex p={"3rem 1rem"}>
+      ></Text>
+      <Flex flexDir={{ base: "column", md: "row" }} p={"3rem 1rem"}>
         <Filter
           filteredProducts={filteredProducts}
           products={products}

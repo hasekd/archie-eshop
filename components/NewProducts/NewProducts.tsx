@@ -27,7 +27,7 @@ const NewProducts = () => {
       flexDir={"column"}
       justify={"center"}
       maxW={"130rem"}
-      m={"0 auto"}
+      m={"2rem auto"}
       minH={"50rem"}
     >
       <Text
@@ -38,7 +38,12 @@ const NewProducts = () => {
       >
         Nové produkty
       </Text>
-      <Flex justify={"center"} align={"center"} gap={"1.5rem"}>
+      <Flex
+        flexDir={{ base: "column", lg: "row" }}
+        justify={"center"}
+        align={"center"}
+        gap={"1.5rem"}
+      >
         {slicedProducts.map((product: any) => (
           <NewProductItem
             key={product.id}
@@ -54,14 +59,14 @@ const NewProducts = () => {
           bgColor={theme.color.primary.blue}
           display={"inline-block"}
           ml={"50%"}
-          p={"0.8rem 2rem"}
+          p={"0.9rem 2rem"}
           textColor={"#fff"}
           transform={"translateX(-50%)"}
           fontSize={"1.3rem"}
           fontWeight={500}
           _hover={{
             bgColor: "transparent",
-            boxShadow: `0 0 0 1px ${theme.color.primary.blue}`,
+            boxShadow: `0 0 0 1.5px ${theme.color.primary.blue}`,
             textColor: theme.color.primary.blue,
           }}
           transition={"all 0.2s ease-out"}

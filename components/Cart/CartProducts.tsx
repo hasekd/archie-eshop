@@ -71,17 +71,18 @@ const CartProducts = ({ id, quantity }: CartItemProps) => {
           align={"center"}
         >
           <Button
+            variant={"custom"}
             bgColor={"transparent"}
             _hover={{ bgColor: "none", color: theme.color.primary.blue }}
             pos={"absolute"}
             zIndex={1}
-            _active={{ bgColor: "none" }}
             fontSize={{ base: "1rem", lg: "1.3rem" }}
             onClick={() => decreaseCartQuantity(product.id)}
           >
             -
           </Button>
           <Input
+            variant={"custom"}
             value={quantity}
             type={"number"}
             textAlign={"center"}
@@ -90,11 +91,11 @@ const CartProducts = ({ id, quantity }: CartItemProps) => {
             size={{ base: "sm", sm: "md", md: "lg" }}
           />
           <Button
+            variant={"custom"}
             bgColor={"transparent"}
             _hover={{ bgColor: "none", color: theme.color.primary.blue }}
             pos={"absolute"}
             right={0}
-            _active={{ bgColor: "none" }}
             fontSize={{ base: "0.9rem", lg: "1.2rem" }}
             onClick={() => increaseCartQuantity(product.id)}
           >
@@ -107,6 +108,7 @@ const CartProducts = ({ id, quantity }: CartItemProps) => {
             {formatCurrency(product.attributes.price * quantity)} Kč
           </Text>
           <Button
+            variant={"custom"}
             bgColor={"transparent"}
             size={"xs"}
             fontSize={{ base: "1.2rem", lg: "1.6rem" }}

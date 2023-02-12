@@ -13,9 +13,9 @@ const HomePage = () => {
     <Layout>
       <Box pos={"relative"} textTransform={"uppercase"} textColor={"#fff"}>
         <Image
-          src={require("../public/images/header-img.jpeg")}
+          src={"/images/header-img.jpeg"}
           alt="dog sleeping"
-          width={0}
+          width={200}
           height={0}
           style={{
             width: "100%",
@@ -47,7 +47,7 @@ const HomePage = () => {
           <Link href={"/pelisky"}>
             <Text
               display={"inline-block"}
-              border={"2px solid white"}
+              border={"1.5px solid white"}
               p={{
                 base: "0.7rem 2rem",
                 sm: "0.9rem 2.5rem",
@@ -79,6 +79,7 @@ const HomePage = () => {
         gap={{ base: "5rem", lg: "10rem" }}
         textAlign={"center"}
         flexWrap={"wrap"}
+        m={"2rem auto"}
       >
         <Flex
           flexDir={"column"}

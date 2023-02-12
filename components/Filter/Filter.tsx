@@ -16,8 +16,8 @@ import { theme } from "../../styles/theme";
 
 const ChooseColorBoxStyles: BoxProps = {
   borderRadius: "50%",
-  w: { base: "2rem", md: "2.5rem" },
-  h: { base: "2rem", md: "2.5rem" },
+  w: { base: "2.5rem", md: "3rem" },
+  h: { base: "2.5rem", md: "3rem" },
   cursor: "pointer",
   mr: "0.7rem",
   border: "0.1rem solid #ccc",
@@ -26,8 +26,8 @@ const ChooseColorBoxStyles: BoxProps = {
 };
 
 const ChooseSizeBoxStyles: BoxProps = {
-  w: { base: "2.2rem", md: "2.8rem" },
-  h: { base: "2.2rem", md: "2.8rem" },
+  w: { base: "2.5rem", md: "3.2rem" },
+  h: { base: "2.5rem", md: "3.2rem" },
   cursor: "pointer",
   fontSize: "1.1rem",
   mr: "0.7rem",
@@ -163,13 +163,13 @@ const Filter = ({
             {selectedSize.toLocaleUpperCase()}
           </Text>
           <Button
+            variant={"custom"}
             p={0}
             size={"xs"}
             fontSize={"1.1rem"}
             fontWeight={400}
             bgColor={"transparent"}
             _hover={{ bgColor: "none", color: theme.color.primary.blue }}
-            _active={{ bgColor: "none" }}
             transition={"all 0.2s ease-out"}
             onClick={() => {
               setDefaultValue([0, 20000]);

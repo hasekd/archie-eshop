@@ -64,6 +64,7 @@ const ProductDetails = ({ product }: any) => {
           </Box>
 
           <Button
+            variant={"custom"}
             alignSelf={"flex-start"}
             p={{ base: "1.8rem 3.7rem", md: "2rem 4.3rem" }}
             mt={"2rem"}

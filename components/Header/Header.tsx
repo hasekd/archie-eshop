@@ -64,6 +64,7 @@ const Header = () => {
             cursor={"pointer"}
           >
             <Button
+              variant={"custom"}
               w={"4rem"}
               h={"4rem"}
               pos={"relative"}

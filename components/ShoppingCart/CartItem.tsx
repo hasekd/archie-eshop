@@ -59,11 +59,11 @@ const CartItem = ({ id, quantity }: CartItemProps) => {
             style={{ width: "4rem", height: "4rem", objectFit: "cover" }}
           />
           <Button
+            variant={"custom"}
             bgColor={"transparent"}
             fontSize={{ base: "1.4rem", sm: "1.7rem" }}
             _hover={{ bgColor: "none", color: theme.color.primary.blue }}
             onClick={() => removeFromCart(product.id)}
-            _active={{ bgColor: "none" }}
           >
             &times;
           </Button>

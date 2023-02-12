@@ -1,4 +1,4 @@
-import { extendTheme } from "@chakra-ui/react";
+import { defineStyle, defineStyleConfig, extendTheme } from "@chakra-ui/react";
 
 const color = {
   primary: {
@@ -46,8 +46,15 @@ const globalStylesTheme = {
   },
 };
 
+const customButton = defineStyleConfig({
+  variants: {
+    custom: () => ({ _active: { bgColor: "none" } }),
+  },
+});
+
 const chakraTheme = extendTheme({
   ...globalStylesTheme,
+  components: { Button: customButton },
 });
 
 export default chakraTheme;

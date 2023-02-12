@@ -33,78 +33,77 @@ const Checkout = () => {
     }, 0)
   );
 
-  console.log(formData);
-
   return (
     <>
       <CartHeader />
-      <Flex flexDir={"column"} align={"center"} p={"2rem 1rem"}>
-        <Flex
-          flexDir={{ base: "column", lg: "unset" }}
-          justify={"space-between"}
-          gap={"4rem"}
-        >
-          <Flex flexDir={"column"} gap={"1.5rem"}>
-            <Flex
-              justify={"space-between"}
-              minW={{ base: "unset", md: "45rem" }}
-              minH={{ base: "4rem", md: "5rem" }}
-              border={"1px solid black"}
-              borderRadius={"4px"}
-              p={"1rem"}
-              align={"center"}
-            >
-              <Flex align={"center"} gap={"0.5rem"}>
-                <Text
-                  fontWeight={600}
-                  fontSize={{ base: "1.2rem", md: "1.45rem" }}
-                >
-                  Kontakt:
-                </Text>
-                <Text fontSize={{ base: "1.1rem", md: "1.3rem" }}>
-                  {formData.to_email}
-                </Text>
-              </Flex>
-              <Link href={"/kosik"}>
-                <Text
-                  fontSize={{ base: "1rem", md: "1.2rem" }}
-                  color={theme.color.primary.blue}
-                >
-                  Změnit
-                </Text>
-              </Link>
+      <Flex
+        flexDir={{ base: "column", lg: "row" }}
+        justify={"center"}
+        gap={"1rem"}
+      >
+        <Flex flexDir={"column"} align={"center"} p={"2rem 1rem"} gap={"1rem"}>
+          <Flex
+            justify={"space-between"}
+            minW={{ base: "25rem", sm: "45rem" }}
+            minH={{ base: "4rem", md: "5rem" }}
+            border={"1px solid black"}
+            borderRadius={"4px"}
+            p={"1rem"}
+            align={"center"}
+          >
+            <Flex align={"center"} gap={"0.5rem"}>
+              <Text
+                fontWeight={600}
+                fontSize={{ base: "1.2rem", md: "1.45rem" }}
+              >
+                Kontakt:
+              </Text>
+              <Text fontSize={{ base: "1.1rem", md: "1.3rem" }}>
+                {formData.to_email}
+              </Text>
             </Flex>
-
-            <Flex
-              justify={"space-between"}
-              minW={{ base: "unset", md: "45rem" }}
-              minH={{ base: "4rem", md: "5rem" }}
-              border={"1px solid black"}
-              borderRadius={"4px"}
-              p={"1rem"}
-              align={"center"}
-            >
-              <Flex align={"center"} gap={"0.5rem"}>
-                <Text
-                  fontWeight={600}
-                  fontSize={{ base: "1.2rem", md: "1.45rem" }}
-                >
-                  Doručení:
-                </Text>
-                <Text
-                  fontSize={{ base: "1.1rem", md: "1.3rem" }}
-                >{`${formData.address} ${formData.addressNumber}, ${formData.city}, ${formData.zip}`}</Text>
-              </Flex>
-              <Link href={"/kosik"}>
-                <Text
-                  fontSize={{ base: "1rem", md: "1.2rem" }}
-                  color={theme.color.primary.blue}
-                >
-                  Změnit
-                </Text>
-              </Link>
-            </Flex>
+            <Link href={"/kosik"}>
+              <Text
+                fontSize={{ base: "1rem", md: "1.2rem" }}
+                color={theme.color.primary.blue}
+              >
+                Změnit
+              </Text>
+            </Link>
           </Flex>
+
+          <Flex
+            justify={"space-between"}
+            minW={{ base: "25rem", sm: "45rem" }}
+            minH={{ base: "4rem", md: "5rem" }}
+            border={"1px solid black"}
+            borderRadius={"4px"}
+            p={"1rem"}
+            align={"center"}
+          >
+            <Flex align={"center"} gap={"0.5rem"}>
+              <Text
+                fontWeight={600}
+                fontSize={{ base: "1.2rem", md: "1.45rem" }}
+              >
+                Doručení:
+              </Text>
+              <Text
+                fontSize={{ base: "1.1rem", md: "1.3rem" }}
+              >{`${formData.address} ${formData.addressNumber}, ${formData.city}, ${formData.zip}`}</Text>
+            </Flex>
+            <Link href={"/kosik"}>
+              <Text
+                fontSize={{ base: "1rem", md: "1.2rem" }}
+                color={theme.color.primary.blue}
+              >
+                Změnit
+              </Text>
+            </Link>
+          </Flex>
+        </Flex>
+
+        <Flex flexDir={"column"} gap={"1.5rem"}>
           <Flex
             flexDir={"column"}
             gap={"1rem"}
@@ -115,7 +114,7 @@ const Checkout = () => {
               Vaše objednávka
             </Text>
             <Divider borderColor={"#666"} />
-            <Flex justify={"space-between"} ml={"13rem"}>
+            <Flex justify={"space-between"}>
               <Text>Produkt</Text>
               <Text>Množství</Text>
               <Text mr={"3rem"}>Celkem</Text>
@@ -147,8 +146,22 @@ const Checkout = () => {
               <Text>{totalPrice} Kč</Text>
             </Flex>
           </Flex>
+          <Button
+            variant={"custom"}
+            mt="1rem"
+            alignSelf={"center"}
+            p={"1.5rem 2rem"}
+            fontSize={"1.1rem"}
+            fontWeight={700}
+            bgColor={theme.color.primary.blue}
+            textColor={theme.color.text.white}
+            _hover={{ bgColor: theme.color.hover.blue }}
+            type="submit"
+            onClick={() => setCartItems([])}
+          >
+            Objednat
+          </Button>
         </Flex>
-        <Button onClick={() => setCartItems([])}>Objednat</Button>
       </Flex>
     </>
   );

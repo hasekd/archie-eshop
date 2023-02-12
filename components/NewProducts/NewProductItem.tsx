@@ -48,6 +48,7 @@ const NewProductItem = ({ id, title, price, img, slug }: StoreItemProps) => {
           </Flex>
 
           <Button
+            variant={"custom"}
             textColor={theme.color.text.white}
             bgColor={theme.color.primary.blue}
             fontWeight={700}
