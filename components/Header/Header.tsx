@@ -7,7 +7,6 @@ import {
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
-  Spinner,
   Text,
 } from "@chakra-ui/react";
 import { FiShoppingCart } from "react-icons/fi";
@@ -17,28 +16,24 @@ import { useShoppingCart } from "../../context/ShoppingCartContext";
 import CartItem from "../ShoppingCart/CartItem";
 import { theme } from "../../styles/theme";
 import { formatCurrency } from "../../utils/formatCurrency";
+import useProductsQuery from "../../hooks/useProductsQuery";
 
 const Header = () => {
   const { cartItems, cartQuantity } = useShoppingCart();
 
-  const [data, setData] = useState<any>();
+  const productsQuery = useProductsQuery();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch("http://localhost:1337/api/products?populate=*");
-      const { data } = await res.json();
-      setData(data);
-    };
-    fetchData();
-  }, []);
+  if (productsQuery.isLoading) return <h1>Loading...</h1>;
 
-  if (!data) {
-    return <Spinner size={"xs"} />;
+  if (productsQuery.isError) {
+    return <div>{JSON.stringify(productsQuery.error)}</div>;
   }
 
   const totalPrice = formatCurrency(
     cartItems.reduce((total, cartItem) => {
-      const product = data.find((i: any) => i.id === cartItem.id);
+      const product = productsQuery.data.data.find(
+        (i: any) => i.id === cartItem.id
+      );
 
       return total + (product?.attributes.price || 0) * cartItem.quantity;
     }, 0)
@@ -50,10 +45,12 @@ const Header = () => {
       align={"center"}
       p={"2rem 4rem"}
       pos={"relative"}
+      maxW={"130rem"}
+      m={"0 auto"}
       zIndex={100}
     >
       <Link href={"/"}>
-        <Heading>Archie</Heading>
+        <Heading>Archie's Beds</Heading>
       </Link>
       <Popover trigger="hover" placement="bottom-end">
         <PopoverTrigger>

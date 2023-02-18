@@ -1,6 +1,7 @@
 import { Box, Divider, Flex, Heading, Text } from "@chakra-ui/react";
 import { GetStaticProps } from "next";
 import { useState } from "react";
+import { dehydrate, QueryClient, useQuery } from "react-query";
 import Filter from "../../components/Filter/Filter";
 import Layout from "../../components/Layout/Layout";
 import StoreItem from "../../components/StoreItem/StoreItem";
@@ -18,10 +19,18 @@ type ProductTypes = {
   };
 };
 
-const Pelisky = ({ products }: any) => {
+const fetchData = async () => {
+  const res = await fetch("http://localhost:1337/api/products?populate=*");
+  const data = await res.json();
+  return data;
+};
+
+const Pelisky = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedPrice, setSelectedPrice] = useState([0, 0]);
+
+  const { data } = useQuery(["shop"], fetchData);
 
   const handleColorChange = (color: string) => {
     setSelectedColor(color);
@@ -41,7 +50,7 @@ const Pelisky = ({ products }: any) => {
     setSelectedPrice([0, 0]);
   };
 
-  const filteredProducts = products.filter(
+  const filteredProducts = data.data.filter(
     (product: ProductTypes) =>
       (product.attributes.color === selectedColor || selectedColor === "") &&
       (product.attributes.size === selectedSize || selectedSize === "") &&
@@ -63,16 +72,16 @@ const Pelisky = ({ products }: any) => {
         </Heading>
         <Divider borderColor={theme.color.primary.blue} borderWidth={"2px"} />
       </Box>
-      <Text
-        textAlign={"center"}
-        fontSize={"2.5rem"}
-        fontWeight={500}
-        mt={"2rem"}
-      ></Text>
-      <Flex flexDir={{ base: "column", md: "row" }} p={"3rem 1rem"}>
+      <Flex
+        flexDir={{ base: "column", md: "row" }}
+        align={"center"}
+        p={"3rem 1rem"}
+        maxW={"130rem"}
+        m={"0 auto"}
+      >
         <Filter
           filteredProducts={filteredProducts}
-          products={products}
+          products={data.data}
           selectedColor={selectedColor}
           selectedSize={selectedSize}
           selectedPrice={selectedPrice}
@@ -96,11 +105,12 @@ const Pelisky = ({ products }: any) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch("http://localhost:1337/api/products?populate=*");
-  const data = await res.json();
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery(["shop"], fetchData);
 
   return {
-    props: { products: data.data },
+    props: { dehydratedState: dehydrate(queryClient) },
     revalidate: 800,
   };
 };

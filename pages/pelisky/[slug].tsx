@@ -6,6 +6,7 @@ import { formatCurrency } from "../../utils/formatCurrency";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
 import { theme } from "../../styles/theme";
 import ProductColor from "../../components/StoreItem/ProductColor";
+import { QueryClient } from "react-query";
 
 type ProductTypes = {
   id: number;
@@ -19,7 +20,6 @@ type ProductTypes = {
 };
 
 const ProductDetails = ({ product }: any) => {
-  console.log(product.attributes.slug);
   const { increaseCartQuantity } = useShoppingCart();
 
   const srcImage = `http://localhost:1337${product.attributes.img.data.attributes.url}`;
@@ -92,8 +92,16 @@ const ProductDetails = ({ product }: any) => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
+  const queryClient = new QueryClient();
+
   const { params } = context;
   const productName = params?.slug;
+  await queryClient.prefetchQuery(["shop"], async () => {
+    const res = await fetch(
+      "http://localhost:1337/api/products/" + productName + "?populate=*"
+    );
+  });
+
   const res = await fetch(
     "http://localhost:1337/api/products/" + productName + "?populate=*"
   );

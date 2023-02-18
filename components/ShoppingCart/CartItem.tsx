@@ -4,6 +4,7 @@ import { theme } from "../../styles/theme";
 import { useEffect, useState } from "react";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
 import { formatCurrency } from "../../utils/formatCurrency";
+import useProductsQuery from "../../hooks/useProductsQuery";
 
 type CartItemProps = {
   id: number;
@@ -13,22 +14,15 @@ type CartItemProps = {
 const CartItem = ({ id, quantity }: CartItemProps) => {
   const { removeFromCart } = useShoppingCart();
 
-  const [data, setData] = useState<any>();
+  const productsQuery = useProductsQuery();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch("http://localhost:1337/api/products?populate=*");
-      const { data } = await res.json();
-      setData(data);
-    };
-    fetchData();
-  }, []);
+  if (productsQuery.isLoading) return <h1>Loading...</h1>;
 
-  if (!data) {
-    return <Spinner size={"xs"} />;
+  if (productsQuery.isError) {
+    return <div>{JSON.stringify(productsQuery.error)}</div>;
   }
 
-  const product = data.find((i: any) => i.id === id);
+  const product = productsQuery.data.data.find((i: any) => i.id === id);
 
   if (product == null) return null;
 

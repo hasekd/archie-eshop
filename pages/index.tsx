@@ -15,7 +15,7 @@ const HomePage = () => {
         <Image
           src={"/images/header-img.jpeg"}
           alt="dog sleeping"
-          width={200}
+          width={1000}
           height={0}
           style={{
             width: "100%",
@@ -32,7 +32,7 @@ const HomePage = () => {
           transform={"translate(-50%, -40%)"}
         >
           <Text
-            fontSize={{ base: "0.6rem", sm: "1.15rem", lg: "1.4rem" }}
+            fontSize={{ base: "0.8rem", sm: "1.25rem", lg: "1.4rem" }}
             fontWeight={700}
             mb={"1.3rem"}
           >

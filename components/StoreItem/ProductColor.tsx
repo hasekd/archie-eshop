@@ -2,6 +2,8 @@ import { Box, BoxProps, Flex, Spinner } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { useQuery } from "react-query";
+import useProductsQuery from "../../hooks/useProductsQuery";
 
 const ChooseColorBoxStyles: BoxProps = {
   borderRadius: "50%",
@@ -15,24 +17,17 @@ const ChooseColorBoxStyles: BoxProps = {
 };
 
 const ProductColor = ({ id }: any) => {
-  const [data, setData] = useState<any>();
+  const productsQuery = useProductsQuery();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch("http://localhost:1337/api/products?populate=*");
-      const { data } = await res.json();
-      setData(data);
-    };
-    fetchData();
-  }, []);
+  if (productsQuery.isLoading) return <h1>Loading...</h1>;
 
-  if (!data) {
-    return <Spinner size={"xs"} />;
+  if (productsQuery.isError) {
+    return <div>{JSON.stringify(productsQuery.error)}</div>;
   }
 
   return (
     <Flex>
-      {data.map((product: any) => (
+      {productsQuery.data.data.map((product: any) => (
         <Link key={product.id} href={"/pelisky/" + product.attributes.slug}>
           {product.id !== id ? (
             <Box {...ChooseColorBoxStyles}>
@@ -42,7 +37,7 @@ const ProductColor = ({ id }: any) => {
                 }
                 src={`http://localhost:1337${product.attributes.img.data.attributes.url}`}
                 alt={product.attributes.title}
-                width={0}
+                width={10}
                 height={0}
                 style={{
                   borderRadius: "50%",

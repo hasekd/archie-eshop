@@ -1,26 +1,20 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import useProductsQuery from "../../hooks/useProductsQuery";
 import { theme } from "../../styles/theme";
 import NewProductItem from "./NewProductItem";
 
 const NewProducts = () => {
-  const [data, setData] = useState<any>();
+  const productsQuery = useProductsQuery();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch("http://localhost:1337/api/products?populate=*");
-      const { data } = await res.json();
-      setData(data);
-    };
-    fetchData();
-  }, []);
+  if (productsQuery.isLoading) return <h1>Loading...</h1>;
 
-  if (!data) {
-    return <div>Loading...</div>;
+  if (productsQuery.isError) {
+    return <div>{JSON.stringify(productsQuery.error)}</div>;
   }
 
-  const slicedProducts = data.slice(2);
+  const slicedProducts = productsQuery.data.data.slice(2);
 
   return (
     <Flex

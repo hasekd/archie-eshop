@@ -26,7 +26,7 @@ const NewProductItem = ({ id, title, price, img, slug }: StoreItemProps) => {
             loader={() => srcImage}
             src={srcImage}
             alt={title}
-            width={0}
+            width={100}
             height={0}
             style={{ width: "auto", height: "20rem", objectFit: "cover" }}
           />
