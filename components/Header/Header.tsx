@@ -31,9 +31,7 @@ const Header = () => {
 
   const totalPrice = formatCurrency(
     cartItems.reduce((total, cartItem) => {
-      const product = productsQuery.data.data.find(
-        (i: any) => i.id === cartItem.id
-      );
+      const product = productsQuery.data.find((i: any) => i.id === cartItem.id);
 
       return total + (product?.attributes.price || 0) * cartItem.quantity;
     }, 0)

@@ -74,9 +74,7 @@ const UserInfoForm = () => {
 
   const totalPrice = formatCurrency(
     cartItems.reduce((total, cartItem) => {
-      const product = productsQuery.data.data.find(
-        (i: any) => i.id === cartItem.id
-      );
+      const product = productsQuery.data.find((i: any) => i.id === cartItem.id);
 
       return total + (product?.attributes.price || 0) * cartItem.quantity;
     }, 0)
@@ -86,7 +84,7 @@ const UserInfoForm = () => {
   const invoiceCartContent: unknown[] = [];
 
   cartItems.forEach((item) => {
-    const product = productsQuery.data.data.find((i: any) => i.id === item.id);
+    const product = productsQuery.data.find((i: any) => i.id === item.id);
 
     cartContent.push({
       productName: product.attributes.title,
@@ -98,7 +96,7 @@ const UserInfoForm = () => {
   if (cartContent.lenght === 0) return null;
 
   cartItems.forEach((item) => {
-    const product = productsQuery.data.data.find((i: any) => i.id === item.id);
+    const product = productsQuery.data.find((i: any) => i.id === item.id);
 
     invoiceCartContent.push({
       productName: product.attributes.title,
@@ -110,9 +108,7 @@ const UserInfoForm = () => {
   const orderId = parseInt(uuidv4().replace(/-/g, "").substring(0, 8), 16);
 
   const invoiceTotalPrice = cartItems.reduce((total, cartItem) => {
-    const product = productsQuery.data.data.find(
-      (i: any) => i.id === cartItem.id
-    );
+    const product = productsQuery.data.find((i: any) => i.id === cartItem.id);
 
     return total + (product?.attributes.price || 0) * cartItem.quantity;
   }, 0);
@@ -129,11 +125,8 @@ const UserInfoForm = () => {
       form.append("files", blob, "invoice.pdf");
 
       try {
-        const response = await axios.post(
-          "http://localhost:1337/api/upload",
-          form
-        );
-        someData = response.data;
+        const res = await axios.post("http://localhost:1337/api/upload", form);
+        someData = res.data;
       } catch (error) {
         console.error(error);
       }
@@ -142,27 +135,24 @@ const UserInfoForm = () => {
       const fileId = uploadedFile[0].id;
 
       try {
-        const response = await axios.post(
-          "http://localhost:1337/api/client-datas",
-          {
-            data: {
-              invoice: fileId,
-              email: formData.to_email,
-              name: formData.firstName + " " + formData.lastName,
-              address:
-                formData.address +
-                " " +
-                formData.addressNumber +
-                " " +
-                formData.city +
-                " " +
-                formData.zip,
-              phoneNumber: formData.phoneNumber,
-              message: formData.message,
-            },
-          }
-        );
-        return response.data;
+        const res = await axios.post("http://localhost:1337/api/client-datas", {
+          data: {
+            invoice: fileId,
+            email: formData.to_email,
+            name: formData.firstName + " " + formData.lastName,
+            address:
+              formData.address +
+              " " +
+              formData.addressNumber +
+              " " +
+              formData.city +
+              " " +
+              formData.zip,
+            phoneNumber: formData.phoneNumber,
+            message: formData.message,
+          },
+        });
+        return res.data;
       } catch (error) {
         console.error(error);
       }

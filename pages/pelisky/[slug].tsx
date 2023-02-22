@@ -1,12 +1,14 @@
 import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import Image from "next/image";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import Layout from "../../components/Layout/Layout";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
 import { theme } from "../../styles/theme";
 import ProductColor from "../../components/StoreItem/ProductColor";
-import { QueryClient } from "react-query";
+import { dehydrate, useQuery } from "react-query";
+import { prefetchData } from "../../utils/prefetchData";
+import { useRouter } from "next/router";
 
 type ProductTypes = {
   id: number;
@@ -19,10 +21,34 @@ type ProductTypes = {
   };
 };
 
-const ProductDetails = ({ product }: any) => {
+const fetchProductBySlug = async (slug: string | string[] | undefined) => {
+  try {
+    const res = await fetch(
+      "http://localhost:1337/api/products/" + slug + "?populate=*"
+    );
+
+    const data = await res.json();
+    return data.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const ProductDetails = () => {
   const { increaseCartQuantity } = useShoppingCart();
 
-  const srcImage = `http://localhost:1337${product.attributes.img.data.attributes.url}`;
+  const { query } = useRouter();
+
+  const { data, isLoading, isError, error } = useQuery(
+    ["pelisky", query.slug],
+    () => fetchProductBySlug(query.slug)
+  );
+
+  if (isLoading) return <Text>Loading...</Text>;
+
+  if (isError) return <Text>{JSON.stringify(error)}</Text>;
+
+  const srcImage = `http://localhost:1337${data.attributes.img.data.attributes.url}`;
 
   return (
     <Layout>
@@ -36,7 +62,7 @@ const ProductDetails = ({ product }: any) => {
         <Image
           loader={() => srcImage}
           src={srcImage}
-          alt={product.attributes.title}
+          alt={data.attributes.title}
           width={0}
           height={0}
           style={{ width: "50rem", height: "auto" }}
@@ -46,10 +72,10 @@ const ProductDetails = ({ product }: any) => {
             fontWeight={"400"}
             fontSize={{ base: "2.3rem", md: "2.7rem" }}
           >
-            {product.attributes.title}
+            {data.attributes.title}
           </Heading>
           <Text fontSize={{ base: "1.8rem", md: "2rem" }}>
-            {formatCurrency(product.attributes.price)} Kč
+            {formatCurrency(data.attributes.price)} Kč
           </Text>
 
           <Box mt={"2rem"}>
@@ -60,7 +86,7 @@ const ProductDetails = ({ product }: any) => {
             >
               Vyberte barvu
             </Text>
-            <ProductColor id={product.id} />
+            <ProductColor id={data.id} />
           </Box>
 
           <Button
@@ -73,7 +99,7 @@ const ProductDetails = ({ product }: any) => {
             bgColor={theme.color.primary.blue}
             textColor={theme.color.text.white}
             _hover={{ bgColor: theme.color.hover.blue }}
-            onClick={() => increaseCartQuantity(product.id)}
+            onClick={() => increaseCartQuantity(data.id)}
           >
             Přidat do košíku
           </Button>
@@ -83,7 +109,7 @@ const ProductDetails = ({ product }: any) => {
             letterSpacing={"0.5px"}
             mt={"2rem"}
           >
-            {product.attributes.description}
+            {data.attributes.description}
           </Text>
         </Flex>
       </Flex>
@@ -91,41 +117,9 @@ const ProductDetails = ({ product }: any) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const queryClient = new QueryClient();
-
-  const { params } = context;
-  const productName = params?.slug;
-  await queryClient.prefetchQuery(["shop"], async () => {
-    const res = await fetch(
-      "http://localhost:1337/api/products/" + productName + "?populate=*"
-    );
-  });
-
-  const res = await fetch(
-    "http://localhost:1337/api/products/" + productName + "?populate=*"
-  );
-  const data = await res.json();
-
+export const getServerSideProps: GetServerSideProps = async () => {
   return {
-    props: { product: data.data },
-    revalidate: 1800,
-  };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch("http://localhost:1337/api/products?populate=*");
-  const data = await res.json();
-
-  const paths = data.data.map((product: ProductTypes) => {
-    return {
-      params: { slug: product.attributes.slug },
-    };
-  });
-
-  return {
-    paths: paths,
-    fallback: false,
+    props: { dehydratedState: dehydrate(await prefetchData()) },
   };
 };
 

@@ -1,11 +1,12 @@
 import { Box, Divider, Flex, Heading, Text } from "@chakra-ui/react";
-import { GetStaticProps } from "next";
+import { GetServerSideProps, GetStaticProps } from "next";
 import { useState } from "react";
 import { dehydrate, QueryClient, useQuery } from "react-query";
 import Filter from "../../components/Filter/Filter";
 import Layout from "../../components/Layout/Layout";
 import StoreItem from "../../components/StoreItem/StoreItem";
 import { theme } from "../../styles/theme";
+import { fetchProducts, prefetchData } from "../../utils/prefetchData";
 
 type ProductTypes = {
   id: number;
@@ -19,18 +20,12 @@ type ProductTypes = {
   };
 };
 
-const fetchData = async () => {
-  const res = await fetch("http://localhost:1337/api/products?populate=*");
-  const data = await res.json();
-  return data;
-};
-
 const Pelisky = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedPrice, setSelectedPrice] = useState([0, 0]);
 
-  const { data } = useQuery(["shop"], fetchData);
+  const { data } = useQuery(["pelisky"], fetchProducts);
 
   const handleColorChange = (color: string) => {
     setSelectedColor(color);
@@ -50,7 +45,7 @@ const Pelisky = () => {
     setSelectedPrice([0, 0]);
   };
 
-  const filteredProducts = data.data.filter(
+  const filteredProducts = data.filter(
     (product: ProductTypes) =>
       (product.attributes.color === selectedColor || selectedColor === "") &&
       (product.attributes.size === selectedSize || selectedSize === "") &&
@@ -81,7 +76,7 @@ const Pelisky = () => {
       >
         <Filter
           filteredProducts={filteredProducts}
-          products={data.data}
+          products={data}
           selectedColor={selectedColor}
           selectedSize={selectedSize}
           selectedPrice={selectedPrice}
@@ -104,14 +99,9 @@ const Pelisky = () => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery(["shop"], fetchData);
-
+export const getServerSideProps: GetServerSideProps = async () => {
   return {
-    props: { dehydratedState: dehydrate(queryClient) },
-    revalidate: 800,
+    props: { dehydratedState: dehydrate(await prefetchData()) },
   };
 };
 

@@ -14,7 +14,7 @@ const NewProducts = () => {
     return <div>{JSON.stringify(productsQuery.error)}</div>;
   }
 
-  const slicedProducts = productsQuery.data.data.slice(2);
+  const slicedProducts = productsQuery.data.slice(2);
 
   return (
     <Flex

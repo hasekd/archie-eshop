@@ -18,8 +18,6 @@ const StoreItem = ({ id, title, price, img, slug }: StoreItemProps) => {
 
   const srcImage = `http://localhost:1337${img.data.attributes.url}`;
 
-  console.log(srcImage);
-
   return (
     <Card w="lg" _hover={{ boxShadow: theme.shadow.boxShadow }}>
       <CardBody>

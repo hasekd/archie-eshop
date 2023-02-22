@@ -30,7 +30,7 @@ const CartProducts = ({ id, quantity }: CartItemProps) => {
     return <div>{JSON.stringify(productsQuery.error)}</div>;
   }
 
-  const product = productsQuery.data.data.find((i: any) => i.id === id);
+  const product = productsQuery.data.find((i: any) => i.id === id);
 
   if (product == null) return null;
 

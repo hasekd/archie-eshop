@@ -27,7 +27,7 @@ const ProductColor = ({ id }: any) => {
 
   return (
     <Flex>
-      {productsQuery.data.data.map((product: any) => (
+      {productsQuery.data.map((product: any) => (
         <Link key={product.id} href={"/pelisky/" + product.attributes.slug}>
           {product.id !== id ? (
             <Box {...ChooseColorBoxStyles}>
